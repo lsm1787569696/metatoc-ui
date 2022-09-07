@@ -11,8 +11,17 @@
                     </div>
                 </div>
             </el-col>
-            <!--<el-col class="header-right" :span="17">
-            </el-col>-->
+            <el-col class="header-right" :span="17" style="text-align: right; padding-right: 20px;">
+                <el-button size="large" @click="locationToGitHub" style="margin-top: 5px; padding-left: 12px; padding-right: 12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg>
+                    <span style="padding-left: 5px; margin-top: 2px;">Source Code</span>
+                </el-button>
+
+                <el-button size="large" @click="locationToGitHub" style="margin-top: 5px; padding-left: 12px; padding-right: 12px;">
+                    <svg style="color: #F56C6C;" xmlns="http://www.w3.org/2000/svg" class="icon text-pink" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg>
+                    <span style="padding-left: 5px; margin-top: 2px;">Sponsor</span>
+                </el-button>
+            </el-col>
         </el-row>
     </div>
 
@@ -195,7 +204,7 @@
                                                 09-06 15:06
                                             </span>
                                         </template>
-                                        <span style="font-size: 14px; color: #999;">
+                                        <span style="font-size: 12px; color: #999;">
                                             http://erp.21vianet.com/zhixincloud
                                         </span>
                                     </el-card>
@@ -210,7 +219,7 @@
                                                 09-06 15:06
                                             </span>
                                         </template>
-                                        <span style="font-size: 14px; color: #999;">
+                                        <span style="font-size: 12px; color: #999;">
                                             http://erp.21vianet.com/zhixincloud
                                         </span>
                                     </el-card>
@@ -225,7 +234,7 @@
                                                 09-06 15:06
                                             </span>
                                         </template>
-                                        <span style="font-size: 14px; color: #999;">
+                                        <span style="font-size: 12px; color: #999;">
                                             http://erp.21vianet.com/zhixincloud
                                         </span>
                                     </el-card>
@@ -240,7 +249,7 @@
                                                 09-06 15:06
                                             </span>
                                         </template>
-                                        <span style="font-size: 14px; color: #999;">
+                                        <span style="font-size: 12px; color: #999;">
                                             http://erp.21vianet.com/zhixincloud
                                         </span>
                                     </el-card>
@@ -275,7 +284,7 @@
                                         09-06 15:06
                                     </span>
                                 </template>
-                                <span style="font-size: 14px; color: #999;">
+                                <span style="font-size: 12px; color: #999;">
                                     http://erp.21vianet.com/zhixincloud  ->  https://cn.vuejs.org/api
                                 </span>
                             </el-card>
@@ -304,7 +313,7 @@
                                         09-06 15:06
                                     </span>
                                 </template>
-                                <span style="font-size: 14px; color: #999;">
+                                <span style="font-size: 12px; color: #999;">
                                     http://erp.21vianet.com/zhixincloud
                                 </span>
                             </el-card>
