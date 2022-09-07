@@ -181,7 +181,7 @@
         </div>
 
         <div class="main-middle">
-            <el-row style="margin-top: 25px;">
+            <el-row style="margin-top: 20px;">
                 <el-col :span="22" :offset="1">
                     <div class="main-middle-left">
                         <div class="main-middle-left-header" style="margin-bottom: 0px;">
@@ -262,7 +262,7 @@
         </div>
 
         <div class="main-bottom">
-            <el-row style="margin-top: 25px;">
+            <el-row style="margin-top: 20px;">
                 <el-col :span="11" :offset="1">
                     <div class="main-bottom-left">
                         <div class="main-bottom-left-header">
@@ -500,7 +500,7 @@ onMounted(() => {
 }
 
 .main-middle-left-header-title, .main-bottom-left-header-title, .main-bottom-right-header-title {
-    font-size: 20px;
+    font-size: 18px;
     color:#409EFF;
     font-weight: bold;
     margin-left: 15px;
