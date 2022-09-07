@@ -164,7 +164,7 @@
                 </el-col>
 
                 <el-col :span="7">
-                    <el-card class="common-cards" id="myChartCard" style="cursor: pointer; margin: 0px 20px 0px 15px; padding: 0px;" :body-style="{ padding: '0px'}">
+                    <el-card class="common-cards" id="myChartCard" style="cursor: pointer; margin: 0px 20px 0px 10px; padding: 0px;" :body-style="{ padding: '0px'}">
                         <div id="myChart"></div>
                     </el-card>
                 </el-col>
@@ -186,7 +186,7 @@
                         <div class="main-middle-left-body">
                             <el-row>
                                 <el-col :span="6">
-                                    <el-card style="margin-top: 10px; margin-right: 20px;">
+                                    <el-card style="margin-top: 10px; margin-right: 20px;" :body-style="{ padding: '15px 20px' }">
                                         <template #header>
                                             <span style="font-size: 18px; font-weight: 600;">
                                                 # 22
@@ -201,7 +201,7 @@
                                     </el-card>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-card style="margin-top: 10px; margin-right: 20px;">
+                                    <el-card style="margin-top: 10px; margin-right: 20px;" :body-style="{ padding: '15px 20px' }">
                                         <template #header>
                                             <span style="font-size: 18px; font-weight: 600;">
                                                 # 21
@@ -216,7 +216,7 @@
                                     </el-card>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-card style="margin-top: 10px; margin-right: 20px;">
+                                    <el-card style="margin-top: 10px; margin-right: 20px;" :body-style="{ padding: '15px 20px' }">
                                         <template #header>
                                             <span style="font-size: 18px; font-weight: 600;">
                                                 # 20
@@ -231,7 +231,7 @@
                                     </el-card>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-card style="margin-top: 10px; margin-right: 20px;">
+                                    <el-card style="margin-top: 10px; margin-right: 20px;" :body-style="{ padding: '15px 20px' }">
                                         <template #header>
                                             <span style="font-size: 18px; font-weight: 600;">
                                                 # 19
@@ -266,7 +266,7 @@
                             </span>
                         </div>
                         <div class="main-bottom-left-body">
-                            <el-card v-for="i in 10" :key="i" class="box-card" style="margin-top: 10px; margin-right: 20px;">
+                            <el-card v-for="i in 10" :key="i" class="box-card" style="margin-top: 10px; margin-right: 13px;" :body-style="{ padding: '15px 20px' }">
                                 <template #header>
                                     <el-button link type="primary">
                                         se93u7K3BybK78pIZyQGtPtISIJAaTrxscy8Wv4a4fqcm4U3pu
@@ -295,12 +295,12 @@
                         </div>
 
                         <div class="main-bottom-right-body">
-                            <el-card v-for="i in 3" :key="i" class="box-card" style="margin-top: 10px; margin-right: 20px;">
+                            <el-card v-for="i in 3" :key="i" class="box-card" style="margin-top: 10px; margin-left: -5px; margin-right: 20px;" :body-style="{ padding: '15px 20px' }">
                                 <template #header>
                                     <el-button link type="primary">
                                         se93u7K3BybK78pIZyQGtPtISIJAaTrxscy8Wv4a4fqcm4U3pu
                                     </el-button>
-                                    <span style="font-size: 14px; color: #999; float: right;">
+                                    <span style="font-size: 12px; color: #999; float: right;">
                                         09-06 15:06
                                     </span>
                                 </template>
