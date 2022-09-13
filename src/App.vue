@@ -1,15 +1,15 @@
 <template>
-  <layout></layout>
+  <index></index>
 </template>
 
 <script>
-import layout from './layout/index.vue'
+import index from './views/index.vue'
 export default {
   setup() {
     return {}
   },
   components: {
-    layout
+    index
   }
 }
 </script>
