@@ -13,6 +13,8 @@
             </el-col>
 
             <el-col class="header-right" :span="17">
+                <wallet-create></wallet-create>
+
                 <el-button class="header-right-button" size="large" @click="openGitHub">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="color: #F56C6C;"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg>
                     <span class="header-right-button-text">Sponsor</span>
@@ -72,12 +74,16 @@
 
 <script>
 import { ref } from 'vue';
+import walletCreate from '../components/wallet/create.vue';
 
 export default {
     setup() {
         return {
             headerImageSrc: ref("./src/assets/logo.png")
         }
+    },
+    components: {
+        walletCreate
     }
 }
 </script>
