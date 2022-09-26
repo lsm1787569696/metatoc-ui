@@ -4,22 +4,16 @@
             <el-col :span="6" :offset="1">
                 <!-- <t-authorization></t-authorization> -->
                 <!-- <t-transaction></t-transaction> -->
-                <t-CreateBlock></t-CreateBlock>
+                <!-- <t-CreateBlock></t-CreateBlock> -->
+                <t-User></t-User>
+                <!-- <t-ContentArea></t-ContentArea> -->
+
             </el-col>
 
-            <el-col :span="6">
-                <!-- <t-demonstration></t-demonstration> -->
-                <!-- <t-manageHDFSPath></t-manageHDFSPath> -->
-                <t-ShartBlock></t-ShartBlock>
-            </el-col>
-
-            <el-col :span="6">
-                <!-- <t-node></t-node> -->
-                <!-- <t-allHDFSPath></t-allHDFSPath> -->
-            </el-col>
-
-            <el-col :span="6">
-                <!-- <t-chart></t-chart> -->
+            <el-col :span="16">
+                <t-Share></t-Share>
+                <t-RunningState></t-RunningState>
+                <t-Dom></t-Dom>
             </el-col>
         </el-row>
     </div>
@@ -41,6 +35,11 @@ import allHDFSPath from '../../components/cards/allHDFSPath.vue'
 import chart from '../../components/cards/chart.vue'
 import createBlock from '../../components/cards/createBlock.vue'
 import shareBlock from '../../components/cards/shareBlock.vue'
+import contentArea from '../../components/cards/contentArea.vue'
+import share from '../../components/cards/share.vue'
+import runningState from '../../components/cards/runningState.vue'
+import dom from '../../components/cards/dom.vue'
+import user from '../../components/cards/user.vue'
 
 const tAuthorization = authorization
 const tTransaction = transaction
@@ -51,4 +50,9 @@ const tAllHDFSPath = allHDFSPath
 const tChart = chart
 const tCreateBlock = createBlock
 const tShartBlock = shareBlock
+const tContentArea = contentArea
+const tShare = share
+const TRunningState = runningState
+const TDom = dom
+const TUser = user
 </script>

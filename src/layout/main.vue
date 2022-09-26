@@ -18,7 +18,9 @@ import bottom from './main/bottom.vue'
 
 export default {
     setup() {
-        return {}
+        return {
+            
+        }
     },
     components: {
         tTop: top,

@@ -21,7 +21,8 @@
         </div>
     </el-card>
 
-    <el-dialog v-model="dialogVisible" width="25%">
+
+    <el-dialog v-model="dialogVisible" :close=clearForm() width="25%">
         <template style="" #header="{  titleId, titleClass }">
             <div class="my-header">
                 <div :id="titleId" :class="titleClass">创建块</div>
@@ -47,7 +48,7 @@
             </el-card>
         </el-row>
         <template #footer>
-            <el-button type="primary" @click="clearForm()">确认</el-button>
+            <el-button type="primary">确认</el-button>
         </template>
     </el-dialog>
 
@@ -65,6 +66,13 @@
         HDFSpath:'',
         blockData:''
     })
+
+    function clearForm (){
+        this.createBlockForm.address = ''
+        this.createBlockForm.key = ''
+        this.createBlockForm.HDFSpath = ''
+        this.createBlockForm.blockData = ''
+    }
 </script>
     
 

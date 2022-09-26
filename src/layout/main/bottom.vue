@@ -1,5 +1,5 @@
 <template>
-    <t-allHDFSPath class="padding-top"></t-allHDFSPath>
+    <!-- <t-allHDFSPath class="padding-top"></t-allHDFSPath> -->
     <el-row>
         <!-- <t-transaction class="padding-top"></t-transaction> -->
         <!-- <t-manageHDFSPath class="padding-top"></t-manageHDFSPath> -->
