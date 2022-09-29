@@ -37,11 +37,40 @@ export default {
         }
     },
     mutations: {
-        changeShowBlock (state, name) {
+        changeShow (state, name) {
+            console.log("Execute [changeShow] methond")
+            console.log("Parameter [name] is '", name, "'")
 
-        },
-        changeShowContent (state, name) {
-            console.log("Execute [changeShowContent] methond")
+            if (users.state.currentUser.address != "") {
+                if (name == "") {
+                    for (let key in state) {
+                        if (state[key].users.length > 0) {
+                            let canShowContent = false
+                            for (let index in state[key].users) {
+                                if (state[key].users[index].name == users.state.currentUser.name) {
+                                    canShowContent = true
+                                    break
+                                }
+                            }
+                            state[key].showContent = canShowContent
+                        }
+                    }
+                } else if (typeof state[name] != "undefined") {
+                    // change showBlock
+                    if (state[name].users.length > 0) {
+                        state[name].showBlock = true
+                    }
+                    // change showContent
+                    if (state[name].users.length > 0) {
+                        for (let index in state[name].users) {
+                            if (state[name].users[index].name == users.state.currentUser.name) {
+                                state[name].showContent = true
+                                break
+                            }
+                        }
+                    }
+                }
+            }
         },
         shareBlock (state, name) {
             if (users.state.currentUser.address != "") {
@@ -69,9 +98,10 @@ export default {
                                 avatar: users.state[otherUserName].avatar
                             }
                             state[name].users.push(otherUser)
+
+                            // this.mutations.changeShowContent(state, name)
+                            // this.mutations.changeShowBlock(state, name)
                         }
-
-
                     }
                 }
             }

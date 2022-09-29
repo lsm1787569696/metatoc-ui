@@ -41,6 +41,9 @@ export default {
             if (users.state.currentUser.address != "") {
                 if (state[name].drag == true) {
                     if (typeof blocks.state[state.contentBlockMap[name]] != "undefined") {
+                        console.log("Execute [contentToBlock] methond")
+                        console.log("Parameter [name] is '", name, "'")
+
                         // TODO: POST https://example.io/v1/paths
 
                         const currentUser = {
@@ -51,6 +54,7 @@ export default {
                             avatar: users.state.currentUser.avatar
                         }
                         blocks.state[state.contentBlockMap[name]].users.push(currentUser)
+                        blocks.mutations.changeShow(blocks.state, state.contentBlockMap[name])
                         state[name].drag = false
                     }
                 }

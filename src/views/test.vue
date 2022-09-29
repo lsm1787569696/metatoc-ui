@@ -23,7 +23,8 @@
     <h2>Blocks</h2>
     <ul v-for="item in allBlocks" :key="item">
         <li>数据内容: {{ item.content }}</li>
-        <li>是否显示：{{ item.show }}</li>
+        <li>是否显示区块：{{ item.showBlock }}</li>
+        <li>是否数据内容：{{ item.showContent }}</li>
         <li>数据拥有者：{{ item.users }}</li>
         <li>溯源数据：{{ item.track }}</li>
         <li><button @click="shareBlock(item.name)">分享</button></li>

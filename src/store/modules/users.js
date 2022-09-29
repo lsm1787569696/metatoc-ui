@@ -1,3 +1,5 @@
+import blocks from "./blocks"
+
 export default {
     // 设置私有命名空间
     namespaced: true,
@@ -44,11 +46,16 @@ export default {
     mutations: {
         swithCurrentUser (state, name) {
             if (typeof state[name] != "undefined") {
+                console.log("Execute [swithCurrentUser] methond")
+                console.log("Parameter [name] is '", name, "'")
+
                 state.currentUser.name = state[name].name
                 state.currentUser.byName = state[name].byName
                 state.currentUser.address = state[name].address
                 state.currentUser.privateKey = state[name].privateKey
                 state.currentUser.avatar = state[name].avatar
+
+                blocks.mutations.changeShow(blocks.state, "")
             }
         }
     },
