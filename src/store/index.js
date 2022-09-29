@@ -11,32 +11,6 @@ import services from './modules/services'
 import users from './modules/users'
 
 let store = createStore({
-    state: {
-        currentUser: {
-            name: "",
-            address: "",
-            privateKey: "",
-            avatar: ""
-        }
-    },
-    getters: {
-        getCurrentUserInfo (state) {
-            return state.currentUser
-        }
-    },
-    mutations: {
-        setCurrentUser (state, name) {
-            if (typeof users.state[name] != "undefined") {
-                state.currentUser.name = users.state[name].name
-                state.currentUser.address = users.state[name].address
-                state.currentUser.privateKey = users.state[name].privateKey
-                state.currentUser.avatar = users.state[name].avatar
-            }
-        }
-    },
-    actions: {
-
-    },
     modules: {
         blocks,
         chains,

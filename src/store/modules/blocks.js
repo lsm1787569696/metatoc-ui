@@ -1,4 +1,4 @@
-import store from ".."
+import users from "./users"
 import contents from "./contents"
 
 export default {
@@ -8,14 +8,16 @@ export default {
         blockA: {
             name: "blockA",
             content: contents.state.contentA.content,
-            show: false,
+            showBlock: false,
+            showContent: false,
             users: [],
             track: {}
         },
         blockB: {
             name: "blockB",
             content: contents.state.contentB.content,
-            show: false,
+            showBlock: false,
+            showContent: false,
             users: [],
             track: {}
         }
@@ -35,19 +37,45 @@ export default {
         }
     },
     mutations: {
-        changeShow (state, name) {
-            console.log("state:", state)
-            console.log("name:", name)
-            for (let index in state[name].users) {
-                // console.log(index)
-                console.log(state[name].users[index])
-            }
-        },
-        pushUser (state) {
+        changeShowBlock (state, name) {
 
+        },
+        changeShowContent (state, name) {
+            console.log("Execute [changeShowContent] methond")
+        },
+        shareBlock (state, name) {
+            if (users.state.currentUser.address != "") {
+                if (typeof state[name] != "undefined") {
+                    if (state[name].users.length == 1) {
+                        const userName = state[name].users[0].name
+                        if (userName == users.state.currentUser.name) {
+                            console.log("Execute [shareBlock] methond")
+                            console.log("Parameter [name] is '", name, "'")
+
+                            // TODO: PUT https://example.io/v1/paths
+
+                            let otherUserName = ""
+                            if (userName == "userA") {
+                                otherUserName = "userB"
+                            } else if (userName == "userB") {
+                                otherUserName = "userA"
+                            }
+
+                            const otherUser = {
+                                name: users.state[otherUserName].name,
+                                byName: users.state[otherUserName].byName,
+                                address: users.state[otherUserName].address,
+                                privateKey: users.state[otherUserName].privateKey,
+                                avatar: users.state[otherUserName].avatar
+                            }
+                            state[name].users.push(otherUser)
+                        }
+
+
+                    }
+                }
+            }
         }
     },
-    actions: {
-
-    }
+    actions: {}
 }

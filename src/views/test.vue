@@ -2,11 +2,12 @@
     <h2>Users</h2>
     <ul>
         <li>当前用户姓名：{{ currentUser.name }}</li>
+        <li>当前用户别名姓名：{{ currentUser.byName }}</li>
         <li>当前用户钱包地址：{{ currentUser.address }}</li>
         <li>当前用户私钥：{{ currentUser.privateKey }}</li>
         <li>当前用户头像：{{ currentUser.avatar }}</li>
-        <li><button @click="swithUser('userA')">切换至小明</button></li>
-        <li><button @click="swithUser('userB')">切换至小红</button></li>
+        <li><button @click="swithCurrentUser('userA')">切换至小明</button></li>
+        <li><button @click="swithCurrentUser('userB')">切换至小红</button></li>
     </ul>
     <hr />
 
@@ -25,11 +26,11 @@
         <li>是否显示：{{ item.show }}</li>
         <li>数据拥有者：{{ item.users }}</li>
         <li>溯源数据：{{ item.track }}</li>
-        <li><button @click="contentToBlock(item.name)">分享</button></li>
+        <li><button @click="shareBlock(item.name)">分享</button></li>
     </ul>
     <hr/>
 
-    <h2>Services</h2>
+    <!--<h2>Services</h2>
     <ul>
         <li>服务状态: {{ allServices.serviceStatus }}</li>
         <li>可用节点数: {{ allServices.availableNodeNumber }}</li>
@@ -46,7 +47,7 @@
         <li><button @click="changeNodeStatus(item.name, 'notAvailable')">损坏</button></li>
         <li><button @click="changeNodeStatus(item.name, 'fake')">造假</button></li>
     </ul>
-    <hr/>
+    <hr/> -->
 </template>
 
 <script>
@@ -58,14 +59,17 @@ export default {
     const $store = useStore()
 
     const currentUser = computed(() => {
-        return $store.getters["getCurrentUserInfo"]
+        return $store.getters["users/getCurrentUserInfo"]
     })
-    const swithUser = (name) => {
-        $store.commit("setCurrentUser", name)
+
+    const swithCurrentUser = (name) => {
+        $store.commit("users/swithCurrentUser", name)
     }
+
     const allContents = computed(() => {
         return $store.getters["contents/getAllContentsInfo"]
     })
+
     const contentToBlock = (name) => {
         $store.commit("contents/contentToBlock", name)
     }
@@ -74,16 +78,20 @@ export default {
         return $store.getters["blocks/getAllBlocksInfo"]
     })
 
-    const allServices = computed(() => {
-        return $store.getters["services/getAllServicesInfo"]
-    })
-
-    const allNodes = computed(() => {
-        return $store.getters["chains/getAllNodes"]
-    })
-    const changeNodeStatus = (nodeKey, nodeStatus) => {
-        $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
+    const shareBlock = (name) => {
+        $store.commit("blocks/shareBlock", name)
     }
+
+    // const allServices = computed(() => {
+    //     return $store.getters["services/getAllServicesInfo"]
+    // })
+
+    // const allNodes = computed(() => {
+    //     return $store.getters["chains/getAllNodes"]
+    // })
+    // const changeNodeStatus = (nodeKey, nodeStatus) => {
+    //     $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
+    // }
 
     // const userAInfo = computed(() => {
     //   return $store.getters["users/userAInfo"]
@@ -114,13 +122,14 @@ export default {
 
     return {
       currentUser,
-      swithUser,
+      swithCurrentUser,
       allContents,
       contentToBlock,
       allBlocks,
-      allServices,
-      allNodes,
-      changeNodeStatus
+      shareBlock
+    //   allServices,
+    //   allNodes,
+    //   changeNodeStatus
     //   userAInfo,
     //   userBInfo,
     //   contentAInfo,

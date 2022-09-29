@@ -1,4 +1,4 @@
-import store from ".."
+import users from "./users"
 import blocks from "./blocks"
 
 export default {
@@ -9,7 +9,7 @@ export default {
             name: "contentA",
             content: "Hello",
             path: "/metatoc/1024show/hello/" + Date.now(),
-            drag: true,
+            drag: true
         },
         contentB: {
             name: "contentB",
@@ -38,19 +38,24 @@ export default {
     },
     mutations: {
         contentToBlock (state, name) {
-            if (store.state.currentUser.address == "") {
-                console.error("store.state.currentUser.address is empty")
-            } else {
+            if (users.state.currentUser.address != "") {
                 if (state[name].drag == true) {
-                    blocks.state[state.contentBlockMap[name]].users.push(store.state.currentUser)
-                    blocks.mutations.changeShow(blocks.state, state.contentBlockMap[name])
-                    state[name].drag = false
-                } else {
-                    console.error("This data has been to chain")
+                    if (typeof blocks.state[state.contentBlockMap[name]] != "undefined") {
+                        // TODO: POST https://example.io/v1/paths
+
+                        const currentUser = {
+                            name: users.state.currentUser.name,
+                            byName: users.state.currentUser.byName,
+                            address: users.state.currentUser.address,
+                            privateKey: users.state.currentUser.privateKey,
+                            avatar: users.state.currentUser.avatar
+                        }
+                        blocks.state[state.contentBlockMap[name]].users.push(currentUser)
+                        state[name].drag = false
+                    }
                 }
             }
         }
     },
-    actions: {
-    }
+    actions: {}
 }

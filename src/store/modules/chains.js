@@ -1,3 +1,5 @@
+import store from ".."
+
 export default {
     // 设置私有命名空间
     namespaced: true,
@@ -47,7 +49,5 @@ export default {
             }
         }
     },
-    actions: {
-
-    }
+    actions: {}
 }
