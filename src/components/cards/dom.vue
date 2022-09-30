@@ -65,24 +65,38 @@ export default {
         }
 
         const menus = shallowRef({
-            // menus: [{
-            //     label: "返回(B)",
-            //     tip: "Alt+向左箭头",
-            //     click: () => {
-            //         window.history.back(-1);
-            //     }
-            // }, {
-            //     label: "点击不关闭菜单",
-            //     tip: "不关闭菜单",
-            //     click: () => {
-            //         return false;
-            //     }
-            // }]
+            menus: [{
+                label: "恢复此节点",
+                tip: "",
+                click: () => {
+                    return false;
+                }
+            }, {
+                label: "损坏此节点",
+                tip: "",
+                click: () => {
+                    return false;
+                }
+            }, {
+                label: "恢复全部节点",
+                tip: "",
+                click: () => {
+                    return false;
+                }
+            }, {
+                label: "损坏全部节点",
+                tip: "",
+                click: () => {
+                    return false;
+                }
+            }]
         })
         return { menus, allBlocks, allNodes, changeNodeStatus }
     },
-    mounted() {
+    methods: {
 
+    },
+    mounted() {
     }
 }
 </script>
