@@ -1,5 +1,6 @@
 import users from "./users"
 import contents from "./contents"
+import chains from "./chains"
 
 export default {
     // 设置私有命名空间
@@ -8,6 +9,7 @@ export default {
         blockA: {
             name: "blockA",
             content: contents.state.contentA.content,
+            fakeContent: contents.state.contentA.fakeContent,
             showBlock: false,
             showContent: false,
             users: [],
@@ -16,6 +18,7 @@ export default {
         blockB: {
             name: "blockB",
             content: contents.state.contentB.content,
+            fakeContent: contents.state.contentB.fakeContent,
             showBlock: false,
             showContent: false,
             users: [],
@@ -99,8 +102,11 @@ export default {
                             }
                             state[name].users.push(otherUser)
 
-                            // this.mutations.changeShowContent(state, name)
-                            // this.mutations.changeShowBlock(state, name)
+                            // 更新区块数据是否显示
+                            // blocks.mutations.changeShow(blocks.state, "")
+
+                            // 更新链上节点数据是否显示
+                            chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
                         }
                     }
                 }

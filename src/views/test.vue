@@ -31,7 +31,7 @@
     </ul>
     <hr/>
 
-    <!--<h2>Services</h2>
+    <h2>Services</h2>
     <ul>
         <li>服务状态: {{ allServices.serviceStatus }}</li>
         <li>可用节点数: {{ allServices.availableNodeNumber }}</li>
@@ -42,18 +42,28 @@
 
     <h2>Chains</h2>
     <ul v-for="item in allNodes" :key="item">
-        <li>数据内容：</li>
+        <li>节点名称：{{ item.name }}</li>
+        <li>节点地址：{{ item.address }}</li>
+        <li>数据内容：{{ item.content }}</li>
         <li>节点状态：{{ item.nodeStatus }}</li>
         <li><button @click="changeNodeStatus(item.name, 'available')">恢复</button></li>
         <li><button @click="changeNodeStatus(item.name, 'notAvailable')">损坏</button></li>
         <li><button @click="changeNodeStatus(item.name, 'fake')">造假</button></li>
     </ul>
-    <hr/> -->
+    <hr/>
+
+    <tDom></tDom>
+
+    <div class="card">
+        <div class="card2">
+        </div>
+    </div>
 </template>
 
 <script>
 import { computed } from '@vue/reactivity'
 import { useStore } from 'vuex'
+import dom from '../components/cards/dom.vue'
 
 export default {
   setup() {
@@ -83,43 +93,17 @@ export default {
         $store.commit("blocks/shareBlock", name)
     }
 
-    // const allServices = computed(() => {
-    //     return $store.getters["services/getAllServicesInfo"]
-    // })
+    const allServices = computed(() => {
+        return $store.getters["services/getAllServicesInfo"]
+    })
 
-    // const allNodes = computed(() => {
-    //     return $store.getters["chains/getAllNodes"]
-    // })
-    // const changeNodeStatus = (nodeKey, nodeStatus) => {
-    //     $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
-    // }
+    const allNodes = computed(() => {
+        return $store.getters["chains/getAllNodes"]
+    })
 
-    // const userAInfo = computed(() => {
-    //   return $store.getters["users/userAInfo"]
-    // })
-    // const userBInfo = computed(() => {
-    //   return $store.getters["users/userBInfo"]
-    // })
-
-    // const contentAInfo = computed(() => {
-    //   return $store.getters["contents/contentAInfo"]
-    // })
-    // const contentBInfo = computed(() => {
-    //   return $store.getters["contents/contentBInfo"]
-    // })
-    // const contentAToBlock = () => {
-    //   $store.commit("contents/contentAToBlock")
-    // }
-    // const contentBToBlock = () => {
-    //   $store.commit("contents/contentBToBlock")
-    // }
-
-    // const blockAInfo = computed(() => {
-    //     return $store.getters["blocks/blockAInfo"]
-    // })
-    // const blockBInfo = computed(() => {
-    //     return $store.getters["blocks/blockBInfo"]
-    // })
+    const changeNodeStatus = (nodeKey, nodeStatus) => {
+        $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
+    }
 
     return {
       currentUser,
@@ -127,23 +111,41 @@ export default {
       allContents,
       contentToBlock,
       allBlocks,
-      shareBlock
-    //   allServices,
-    //   allNodes,
-    //   changeNodeStatus
-    //   userAInfo,
-    //   userBInfo,
-    //   contentAInfo,
-    //   contentBInfo,
-    //   contentAToBlock,
-    //   contentBToBlock,
-    //   blockAInfo,
-    //   blockBInfo
+      shareBlock,
+      allServices,
+      allNodes,
+      changeNodeStatus
     }
+  },
+  components: {
+    tDom: dom
   }
 }
 </script>
 
 <style>
+.card {
+ width: 190px;
+ height: 254px;
+ background-image: linear-gradient(163deg, #00ff75 0%, #00ff75 100%);
+ border-radius: 20px;
+ transition: all .3s;
+}
 
+.card2 {
+ width: 190px;
+ height: 254px;
+ background-color: #000;
+ border-radius: 20px;
+ transition: all .2s;
+}
+
+.card2:hover {
+ transform: scale(0.98);
+ border-radius: 20px;
+}
+
+.card:hover {
+ box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
 </style>

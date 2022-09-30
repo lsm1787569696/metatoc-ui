@@ -1,4 +1,5 @@
 import blocks from "./blocks"
+import chains from "./chains"
 
 export default {
     // 设置私有命名空间
@@ -44,6 +45,7 @@ export default {
         }
     },
     mutations: {
+        // 切换用户
         swithCurrentUser (state, name) {
             if (typeof state[name] != "undefined") {
                 console.log("Execute [swithCurrentUser] methond")
@@ -55,7 +57,11 @@ export default {
                 state.currentUser.privateKey = state[name].privateKey
                 state.currentUser.avatar = state[name].avatar
 
+                // 切换用户时更新区块数据是否显示
                 blocks.mutations.changeShow(blocks.state, "")
+
+                // 切换用户时更新链上节点数据是否显示
+                chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
             }
         }
     },

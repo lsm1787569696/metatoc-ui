@@ -1,3 +1,5 @@
+import chains from "./chains"
+
 export default {
     // 设置私有命名空间
     namespaced: true,
@@ -9,25 +11,47 @@ export default {
     },
     getters: {
         getAllServicesInfo (state) {
+            let availableNodeNumber = 0
+            let notAvailableNodeNumber = 0
+            let fakeNodeNumber = 0
+            for (let key in chains.state) {
+                if (chains.state[key].nodeStatus == "available") {
+                    availableNodeNumber++
+                } else if (chains.state[key].nodeStatus == "notAvailable") {
+                    notAvailableNodeNumber++
+                } else if (chains.state[key].nodeStatus == "fake") {
+                    fakeNodeNumber++
+                }
+            }
+            if (availableNodeNumber <= 2) {
+                state.serviceStatus = "notAvailable"
+            }
+            state.availableNodeNumber = availableNodeNumber
+            state.notAvailableNodeNumber = notAvailableNodeNumber
+            state.fakeNodeNumber = fakeNodeNumber
             return state
         }
     },
     mutations: {
-        changeServiceStatus (state, serviceStatus) {
-            if (state.availableNodeNumber + state.notAvailableNodeNumber + state.fakeNodeNumber == 4) {
-                if (serviceStatus == "available") {
-                    // state.availableNodeNumber++
-                    // state.notAvailableNodeNumber--
-                    // state.fakeNodeNumber--
-                } else if (serviceStatus == "notAvailable") {
-                    // state.availableNodeNumber--
-                    // state.notAvailableNodeNumber++
-                    // state.fakeNodeNumber--
-                } else if (serviceStatus == "fake") {
-
+        refreshServices (state) {
+            let availableNodeNumber = 0
+            let notAvailableNodeNumber = 0
+            let fakeNodeNumber = 0
+            for (let key in chains.state) {
+                if (chains.state[key].nodeStatus == "available") {
+                    availableNodeNumber++
+                } else if (chains.state[key].nodeStatus == "notAvailable") {
+                    notAvailableNodeNumber++
+                } else if (chains.state[key].nodeStatus == "fake") {
+                    fakeNodeNumber++
                 }
-                state.serviceStatus = serviceStatus
             }
+            if (availableNodeNumber <= 2) {
+                state.serviceStatus = "notAvailable"
+            }
+            state.availableNodeNumber = availableNodeNumber
+            state.notAvailableNodeNumber = notAvailableNodeNumber
+            state.fakeNodeNumber = fakeNodeNumber
         }
     },
     actions: {}
