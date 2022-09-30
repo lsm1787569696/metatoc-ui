@@ -1,45 +1,45 @@
 <template>
-        <div class="chains-container" style="border: 1px solid red;">
-            <el-row>
-                <el-col :span="12" class="flex justify-content-center">
-                    <div class="node-container nodeA-container" v-menus:left="menus">
-                        <div class="glass" style="position: relative; top: 40px; left: -10px;">
-                            <div style="text-align: center">
-                                <span id="title"> Hello </span>
-                                <div style="margin-top: 5px;"></div>
-                                <span id="sub-title"> submit by xiaoming </span>
-                                <div style="margin-top: 3px;"></div>
-                            </div>
-                        </div>
-                        <div class="glass" style="position: relative; top: 60px; left: -10px;">
-                            <div style="text-align: center">
-                                <span id="title"> World </span>
-                                <div style="margin-top: 5px;"></div>
-                                <span id="sub-title"> submit by xiaohong </span>
-                                <div style="margin-top: 3px;"></div>
-                            </div>
+    <div class="chains-container" style="border: 1px solid red;">
+        <el-row>
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="node-container nodeA-container" v-menus:left="menus">
+                    <div class="glass" style="position: relative; top: 40px; left: -10px;">
+                        <div style="text-align: center">
+                            <span id="title"> Hello </span>
+                            <div style="margin-top: 5px;"></div>
+                            <span id="sub-title"> submit by xiaoming </span>
+                            <div style="margin-top: 3px;"></div>
                         </div>
                     </div>
-                </el-col>
-                <el-col :span="12" class="flex justify-content-center">
-                    <div class="node-container nodeB-container" v-menus:left="menus">
-
+                    <div class="glass" style="position: relative; top: 60px; left: -10px;">
+                        <div style="text-align: center">
+                            <span id="title"> World </span>
+                            <div style="margin-top: 5px;"></div>
+                            <span id="sub-title"> submit by xiaohong </span>
+                            <div style="margin-top: 3px;"></div>
+                        </div>
                     </div>
-                </el-col>
-            </el-row>
-            <el-row style="margin-top: 50px;">
-                <el-col :span="12" class="flex justify-content-center">
-                    <div class="node-container nodeC-container" v-menus:left="menus">
+                </div>
+            </el-col>
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="node-container nodeB-container" v-menus:left="menus">
 
-                    </div>
-                </el-col>
-                <el-col :span="12" class="flex justify-content-center">
-                    <div class="node-container nodeD-container" v-menus:left="menus">
+                </div>
+            </el-col>
+        </el-row>
+        <el-row style="margin-top: 50px;">
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="node-container nodeC-container" v-menus:left="menus">
 
-                    </div>
-                </el-col>
-            </el-row>
-        </div>
+                </div>
+            </el-col>
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="node-container nodeD-container" v-menus:left="menus">
+
+                </div>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ export default {
         })
 
         const changeNodeStatus = (nodeKey, nodeStatus) => {
-            $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
+            $store.commit("chains/changeNodeStatus", { "nodeKey": nodeKey, "nodeStatus": nodeStatus })
         }
 
         const menus = shallowRef({
@@ -91,9 +91,11 @@ export default {
 .flex {
     display: flex;
 }
+
 .justify-content-center {
     justify-content: center;
 }
+
 .glass {
     background-color: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(6px);
@@ -114,20 +116,23 @@ export default {
     justify-content: center;
     align-items: end;
 }
+
 #title {
     font-weight: 600;
     font-size: 50px;
     /* letter-spacing: 5px; */
     margin-bottom: 5px;
 }
+
 #sub-title {
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 1px;
     margin-bottom: 5px;
 }
-.chains-container {
-}
+
+.chains-container {}
+
 .node-container {
     width: 300px;
     height: 300px;
@@ -137,16 +142,12 @@ export default {
     justify-items: center;
     cursor: pointer;
 }
-.nodeA-container {
 
-}
-.nodeB-container {
+.nodeA-container {}
 
-}
-.nodeC-container {
+.nodeB-container {}
 
-}
-.nodeD-container {
+.nodeC-container {}
 
-}
+.nodeD-container {}
 </style>

@@ -28,16 +28,16 @@ export default {
         }
     },
     getters: {
-        getCurrentUserInfo (state) {
+        getCurrentUserInfo(state) {
             return state.currentUser
         },
-        getUserAInfo (state) {
+        getUserAInfo(state) {
             return state.userA
         },
-        getUserBInfo (state) {
+        getUserBInfo(state) {
             return state.userB
         },
-        getAllUsersInfo (state) {
+        getAllUsersInfo(state) {
             const allUsers = []
             allUsers.push(state.userA)
             allUsers.push(state.userB)
@@ -46,7 +46,7 @@ export default {
     },
     mutations: {
         // 切换用户
-        swithCurrentUser (state, name) {
+        swithCurrentUser(state, name) {
             if (typeof state[name] != "undefined") {
                 console.log("Execute [swithCurrentUser] methond")
                 console.log("Parameter [name] is '", name, "'")
@@ -61,7 +61,7 @@ export default {
                 blocks.mutations.changeShow(blocks.state, "")
 
                 // 切换用户时更新链上节点数据是否显示
-                chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
+                chains.mutations.changeNodeStatus(chains.state, { nodeKey: "", nodeStatus: "" })
             }
         }
     },

@@ -1,16 +1,15 @@
 <template>
     <div class="main-top">
         <el-row>
-            <el-col :span="6" :offset="1">
+            <el-col :span="5" :offset="1">
                 <!-- <t-authorization></t-authorization> -->
                 <!-- <t-transaction></t-transaction> -->
                 <!-- <t-CreateBlock></t-CreateBlock> -->
                 <t-User></t-User>
-                <!-- <t-ContentArea></t-ContentArea> -->
-
+                <t-ContentArea></t-ContentArea>
             </el-col>
 
-            <el-col :span="16">
+            <el-col :span="17">
                 <t-Share></t-Share>
                 <t-RunningState></t-RunningState>
                 <t-Dom></t-Dom>
@@ -52,7 +51,7 @@ const tCreateBlock = createBlock
 const tShartBlock = shareBlock
 const tContentArea = contentArea
 const tShare = share
-const TRunningState = runningState
-const TDom = dom
-const TUser = user
+const tRunningState = runningState
+const tDom = dom
+const tUser = user
 </script>
