@@ -8,24 +8,28 @@ export default {
     state: {
         nodeA: {
             name: "nodeA",
+            byName: "节点A",
             address: "",
             content: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeB: {
             name: "nodeB",
+            byName: "节点B",
             address: "",
             content: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeC: {
             name: "nodeC",
+            byName: "节点C",
             address: "",
             content: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeD: {
             name: "nodeD",
+            byName: "节点D",
             address: "",
             content: [],
             nodeStatus: "available" //available, notAvailable, fake
