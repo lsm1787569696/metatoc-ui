@@ -61,7 +61,7 @@ export default {
                         blocks.mutations.changeShow(blocks.state, state.contentBlockMap[name])
 
                         // 链上展示
-                        chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
+                        // chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
 
                         // 禁用拖拽
                         state[name].drag = false

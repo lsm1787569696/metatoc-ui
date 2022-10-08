@@ -83,6 +83,7 @@ export default {
 
     const contentToBlock = (name) => {
         $store.commit("contents/contentToBlock", name)
+        $store.commit("chains/changeNodeStatus", {nodeKey: "", nodeStatus: ""})
     }
 
     const allBlocks = computed(() => {
