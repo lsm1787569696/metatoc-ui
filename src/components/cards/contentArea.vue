@@ -10,7 +10,7 @@
                 @remove="moveSuccess" @start="startDraggable" filter=".undraggable" chosenClass="chosen">
                 <template #item="{ element , index}">
                     <div :class="element.drag ? 'draggable' : 'undraggable'" class="content1 flex" :id="index">
-                        {{ element.name }}
+                        {{ element.content }}
                     </div>
                 </template>
             </draggable>
@@ -29,7 +29,6 @@ const amount = ref('');
 const arr1 = reactive([
     {
         id: 0, name: $store.state.contents.contentA.name, content: $store.state.contents.contentA.content, src: 'src/assets/man.png', src1: 'src/assets/woman.png', className: 'contentClass1', drag: $store.state.contents.contentA.drag,
-        button: `<el-button class="el-button" type="success" @click="share">分享</el-button>`
     },
     { id: 1, name: $store.state.contents.contentB.name, content: $store.state.contents.contentB.content, src: 'src/assets/man.png', src1: 'src/assets/woman.png', className: 'contentClass2', drag: $store.state.contents.contentB.drag },
 ])
@@ -48,7 +47,7 @@ const moveSuccess = (e) => {
     for (let index in arr1) {
         if (arr1[index].id == e.oldDraggableIndex) {
             arr1[index].drag = !arr1[index].drag
-            $store.commit("contents/contentToBlock", e.item.innerHTML)
+            $store.commit("contents/contentToBlock", e.item.__draggable_context.element.name)
         } else { }
     }
 
@@ -106,76 +105,29 @@ img {
 }
 
 .chosen {
-    background-color: #000 !important;
-    color: #fff;
+    /* background-color: rgba(45, 95, 255, .4) !important; */
 }
 
 .ghost {
-    background-color: red !important;
+    /* background-color: rgba(45, 95, 255, .4) !important; */
 }
 
+
+/* From www.lingdaima.com */
 .card {
-    --border-radius: 15px;
-    --border-width: 4px;
-    appearance: none;
-    position: relative;
-    padding: 1em 2em;
-    border: 0;
-    background: rgba(45, 95, 255, .2);
-    font-size: 18px;
-    font-weight: 500;
-    color: #fff;
-    z-index: 2;
-    border-radius: 15px;
+    --color-1: rgba(178, 12, 211, .3);
+    --color-2: rgba(5, 252, 248, 0.3);
+    --color-3: rgba(45, 95, 255, .4);
+    background: var(--color-3);
+    box-shadow: -10px -10px var(--color-1),
+        15px 10px var(--color-2);
+    transition: box-shadow 0.25s ease-in-out,
+        transform 0.25s ease-in-out;
 }
 
-.card::after {
-    --m-i: linear-gradient(#000, #000);
-    --m-o: content-box, padding-box;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding: var(--border-width);
-    border-radius: var(--border-radius);
-    background-image: conic-gradient(#488cfb,
-            #29dbbc,
-            #ddf505,
-            #ff9f0e,
-            #e440bb,
-            #655adc,
-            #488cfb);
-    -webkit-mask-image: var(--m-i), var(--m-i);
-    mask-image: var(--m-i), var(--m-i);
-    -webkit-mask-origin: var(--m-o);
-    mask-origin: var(--m-o);
-    -webkit-mask-clip: var(--m-o);
-    mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
-    filter: hue-rotate(0);
-    animation: rotate-hue linear 500ms infinite;
-    animation-play-state: paused;
-}
-
-.card:hover::after {
-    animation-play-state: running;
-}
-
-@keyframes rotate-hue {
-    to {
-        filter: hue-rotate(1turn);
-    }
-}
-
-.card,
-.card::after {
-    box-sizing: border-box;
-}
-
-.card:active {
-    --border-width: 5px;
+.card:hover {
+    box-shadow: -10.275px -10.275px var(--color-1),
+        15.4px 10.275px var(--color-2);
 }
 </style>
                     
