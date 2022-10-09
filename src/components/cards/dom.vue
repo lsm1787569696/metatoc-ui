@@ -953,73 +953,81 @@ export default {
 
         const menusNodeA = shallowRef({
             menus: [{
-                label: "启用此节点",
+                label: "恢复此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeA", "nodeStatus": "available"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }, {
-                label: "停用此节点",
+                label: "损坏此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeA", "nodeStatus": "notAvailable"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }]
         })
 
         const menusNodeB = shallowRef({
             menus: [{
-                label: "启用此节点",
+                label: "恢复此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeB", "nodeStatus": "available"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }, {
-                label: "停用此节点",
+                label: "损坏此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeB", "nodeStatus": "notAvailable"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }]
         })
 
         const menusNodeC = shallowRef({
             menus: [{
-                label: "启用此节点",
+                label: "恢复此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeC", "nodeStatus": "available"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }, {
-                label: "停用此节点",
+                label: "损坏此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeC", "nodeStatus": "notAvailable"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }]
         })
 
         const menusNodeD = shallowRef({
             menus: [{
-                label: "启用此节点",
+                label: "恢复此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeD", "nodeStatus": "available"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }, {
-                label: "停用此节点",
+                label: "损坏此节点",
                 tip: "",
                 click: () => {
                     $store.commit("chains/changeNodeStatus", {"nodeKey": "nodeD", "nodeStatus": "notAvailable"})
                     $store.commit("services/refreshServices")
-                }
+                },
+                disabled: false
             }]
         })
 
@@ -1142,5 +1150,12 @@ export default {
     --el-tag-border-color: #ff3948;
     --el-tag-hover-color: #ff3948;
     --el-tag-text-color: #ff3948;
+}
+</style>
+
+<style>
+.v3-menus-active {
+    background: #f5f7fb!important;
+    color: #606266!important;
 }
 </style>
