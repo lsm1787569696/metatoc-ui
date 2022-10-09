@@ -28,6 +28,7 @@
         <li>数据拥有者：{{ item.users }}</li>
         <li>溯源数据：{{ item.track }}</li>
         <li><button @click="shareBlock(item.name)">分享</button></li>
+        <li><button @click="viewTrack(item.name)">查看溯源数据</button></li>
     </ul>
     <hr/>
 
@@ -45,6 +46,7 @@
         <li>节点名称：{{ item.name }}</li>
         <li>节点地址：{{ item.address }}</li>
         <li>数据内容：{{ item.content }}</li>
+        <li>已上链数据内容：{{ item.allContent }}</li>
         <li>节点状态：{{ item.nodeStatus }}</li>
         <li><button @click="changeNodeStatus(item.name, 'available')">恢复</button></li>
         <li><button @click="changeNodeStatus(item.name, 'notAvailable')">损坏</button></li>
@@ -70,6 +72,12 @@ export default {
 
     const swithCurrentUser = (name) => {
         $store.commit("users/swithCurrentUser", name)
+
+        // 切换用户时更新区块数据是否显示
+        $store.commit("blocks/changeShow", "")
+
+        // 切换用户时更新链上节点数据是否显示
+        $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
     }
 
     const allContents = computed(() => {
@@ -78,7 +86,19 @@ export default {
 
     const contentToBlock = (name) => {
         $store.commit("contents/contentToBlock", name)
+
+        let blockName = ""
+        if (name == "contentA") {
+            blockName = "blockA"
+        } else {
+            blockName = "blockB"
+        }
+
+        $store.commit("blocks/contentToBlock", blockName)
+        $store.commit("blocks/changeShow", blockName)
+
         $store.commit("chains/changeNodeStatus", {nodeKey: "", nodeStatus: ""})
+        $store.commit("services/refreshServices")
     }
 
     const allBlocks = computed(() => {
@@ -87,6 +107,10 @@ export default {
 
     const shareBlock = (name) => {
         $store.commit("blocks/shareBlock", name)
+    }
+
+    const viewTrack = (name) => {
+        $store.commit("blocks/viewTrack", name)
     }
 
     const allServices = computed(() => {
@@ -99,6 +123,7 @@ export default {
 
     const changeNodeStatus = (nodeKey, nodeStatus) => {
         $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
+        $store.commit("services/refreshServices")
     }
 
     return {
@@ -108,6 +133,7 @@ export default {
       contentToBlock,
       allBlocks,
       shareBlock,
+      viewTrack,
       allServices,
       allNodes,
       changeNodeStatus

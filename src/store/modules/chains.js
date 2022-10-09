@@ -1,6 +1,7 @@
 import users from "./users"
 import blocks from "./blocks"
 import services from "./services"
+import contents from "./contents"
 
 export default {
     // 设置私有命名空间
@@ -11,6 +12,7 @@ export default {
             byName: "节点A",
             address: "",
             content: [],
+            allContent: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeB: {
@@ -18,6 +20,7 @@ export default {
             byName: "节点B",
             address: "",
             content: [],
+            allContent: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeC: {
@@ -25,6 +28,7 @@ export default {
             byName: "节点C",
             address: "",
             content: [],
+            allContent: [],
             nodeStatus: "available" //available, notAvailable, fake
         },
         nodeD: {
@@ -32,6 +36,7 @@ export default {
             byName: "节点D",
             address: "",
             content: [],
+            allContent: [],
             nodeStatus: "available" //available, notAvailable, fake
         }
     },
@@ -47,7 +52,7 @@ export default {
     },
     mutations: {
         changeNodeStatus (state, {nodeKey, nodeStatus}) {
-            if (users.state.currentUser.address != "") {
+            if (true || users.state.currentUser.address != "") {
                 console.log("Execute [contentToBlock] methond")
                 console.log("Parameter [nodeKey] is '", nodeKey, "'")
                 console.log("Parameter [nodeStatus] is '", nodeStatus, "'")
@@ -82,10 +87,23 @@ export default {
                             }
                         }
                     }
+
+                    for (let key in contents.state) {
+                        if (contents.state[key].drag === false) {
+                            const content = contents.state[key].content
+                            for (let key in state) {
+                                if (state[key].nodeStatus == "available") {
+                                    if (state[key].allContent.indexOf(content) == -1) {
+                                        state[key].allContent.push(content)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            services.mutations.refreshServices(services.state)
+            // services.mutations.refreshServices(services.state)
         }
     },
     actions: {}
