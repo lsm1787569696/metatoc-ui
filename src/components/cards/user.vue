@@ -102,9 +102,12 @@ img {
 
 .backStyle {
     border-radius: 50px;
+    /* background: linear-gradient(145deg, #f0f0f0, #cacaca); */
     background: #e0e0e0;
-    box-shadow: 20px 20px 37px rgba(45, 95, 255, .5),
-        -20px -20px 37px #ffffff;
+    /* background: rgb(2, 0, 36); */
+    background: linear-gradient(90deg, rgba(2, 0, 36, .4) 0%, rgba(45, 95, 255, .4) 31%, rgba(8, 41, 142, .4) 63%, rgba(0, 212, 255, .4) 100%);
+    box-shadow: 20px 20px 40px rgba(45, 95, 255, .5),
+        -20px -20px 40px #ffffff;
 }
 
 .imgBox {
