@@ -48,6 +48,8 @@ export default {
             }
             if (availableNodeNumber <= 2) {
                 state.serviceStatus = "notAvailable"
+            } else {
+                state.serviceStatus = "available"
             }
             state.availableNodeNumber = availableNodeNumber
             state.notAvailableNodeNumber = notAvailableNodeNumber

@@ -7,7 +7,7 @@
 
 <style scoped>
 .main {
-    height: 900px;
+    /* height: 900px; */
     background: #f5f7fb;
 }
 </style>
@@ -19,7 +19,7 @@ import bottom from './main/bottom.vue'
 export default {
     setup() {
         return {
-            
+
         }
     },
     components: {
