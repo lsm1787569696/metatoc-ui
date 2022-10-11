@@ -1053,9 +1053,9 @@ export default {
     watch: {
         "$store.state.users.currentUser": {
             handler (o, n) {
-                console.log("watch $store.state.users.currentUser")
-                console.log(o)
-                console.log(n)
+                // console.log("watch $store.state.users.currentUser")
+                // console.log(o)
+                // console.log(n)
             },
             deep: true,
             immediate: true

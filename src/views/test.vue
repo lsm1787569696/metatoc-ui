@@ -6,8 +6,8 @@
         <li>当前用户钱包地址：{{ currentUser.address }}</li>
         <li>当前用户私钥：{{ currentUser.privateKey }}</li>
         <li>当前用户头像：{{ currentUser.avatar }}</li>
-        <li><button @click="swithCurrentUser('userA')">切换至小明</button></li>
-        <li><button @click="swithCurrentUser('userB')">切换至小红</button></li>
+        <li><button @click="swithCurrentUser('userA')">切换至userA</button></li>
+        <li><button @click="swithCurrentUser('userB')">切换至userB</button></li>
     </ul>
     <hr />
 
@@ -17,6 +17,9 @@
         <li>数据地址：{{ item.path }}</li>
         <li>能否拖拽：{{ item.drag }}</li>
         <li><button @click="contentToBlock(item.name)">上链</button></li>
+    </ul>
+    <ul>
+        <li><button @click="refreshContents()">重置Contents</button></li>
     </ul>
     <hr/>
 
@@ -66,21 +69,21 @@ export default {
   setup() {
     const $store = useStore()
 
-    const currentUser = computed(() => {
+    let currentUser = computed(() => {
         return $store.getters["users/getCurrentUserInfo"]
     })
 
     const swithCurrentUser = (name) => {
-        $store.commit("users/swithCurrentUser", name)
+        $store.commit("users/swithCurrentUser", {"name": name, "reset": false})
 
         // 切换用户时更新区块数据是否显示
-        $store.commit("blocks/changeShow", "")
+        // $store.commit("blocks/changeShow")
 
         // 切换用户时更新链上节点数据是否显示
-        $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
+        // $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
     }
 
-    const allContents = computed(() => {
+    let allContents = computed(() => {
         return $store.getters["contents/getAllContentsInfo"]
     })
 
@@ -93,15 +96,23 @@ export default {
         } else {
             blockName = "blockB"
         }
-
         $store.commit("blocks/contentToBlock", blockName)
-        $store.commit("blocks/changeShow", blockName)
 
-        $store.commit("chains/changeNodeStatus", {nodeKey: "", nodeStatus: ""})
-        $store.commit("services/refreshServices")
+        $store.commit("blocks/changeShow")
+
+        // $store.commit("chains/changeNodeStatus", {nodeKey: "", nodeStatus: ""})
+        // $store.commit("services/refreshServices")
     }
 
-    const allBlocks = computed(() => {
+    const refreshContents = () => {
+        $store.commit("contents/refreshContents")
+        allContents = $store.getters["contents/getAllContentsInfo"]
+
+        $store.commit("blocks/refreshBlocks")
+        allBlocks = $store.getters["blocks/getAllBlocksInfo"]
+    }
+
+    let allBlocks = computed(() => {
         return $store.getters["blocks/getAllBlocksInfo"]
     })
 
@@ -113,11 +124,11 @@ export default {
         $store.commit("blocks/viewTrack", name)
     }
 
-    const allServices = computed(() => {
+    let allServices = computed(() => {
         return $store.getters["services/getAllServicesInfo"]
     })
 
-    const allNodes = computed(() => {
+    let allNodes = computed(() => {
         return $store.getters["chains/getAllNodes"]
     })
 
@@ -131,6 +142,7 @@ export default {
       swithCurrentUser,
       allContents,
       contentToBlock,
+      refreshContents,
       allBlocks,
       shareBlock,
       viewTrack,
@@ -141,6 +153,11 @@ export default {
   },
   components: {
     tDom: dom
+  },
+  mounted () {
+    this.$nextTick(() =>{
+        this.swithCurrentUser("userA")
+    })
   }
 }
 </script>
