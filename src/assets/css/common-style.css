@@ -1,0 +1,30 @@
+.my-container-box-shadow {
+    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 2%),
+                0 6.7px 5.3px rgb(0 0 0 / 3%),
+                0 12.5px 10px rgb(0 0 0 / 4%),
+                0 22.3px 17.9px rgb(0 0 0 / 4%),
+                0 41.8px 33.4px rgb(0 0 0 / 5%),
+                0 100px 80px rgb(0 0 0 / 7%);
+    -webkit-box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 2%),
+                0 6.7px 5.3px rgb(0 0 0 / 3%),
+                0 12.5px 10px rgb(0 0 0 / 4%),
+                0 22.3px 17.9px rgb(0 0 0 / 4%),
+                0 41.8px 33.4px rgb(0 0 0 / 5%),
+                0 100px 80px rgb(0 0 0 / 7%);
+}
+.my-container-border-radius {
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+}
+.my-card-border-radius {
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
+.my-button-border-radius {
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+}
+.my-node-border-radius {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
