@@ -1,0 +1,69 @@
+*,*::before,*::after {
+	box-sizing:border-box
+}
+@-webkit-keyframes rotate {
+	100% {
+	transform:rotate(1turn)
+}
+}@keyframes rotate {
+	100% {
+	transform:rotate(1turn)
+}
+}.conic {
+	position:relative;
+	z-index:0;
+	/* width:500px; */
+	/* height:300px; */
+	/* margin:20px; */
+	/* border-radius:10px; */
+	overflow:hidden;
+	/* padding:2rem */
+}
+.conic-success::before, .conic-danger::before {
+	content:"";
+	position:absolute;
+	z-index:-2;
+	left:-100%;
+	top:-100%;
+	width:300%;
+	height:300%;
+	background-color:#f5f7fb;
+	background-repeat:no-repeat;
+	background-position:0 0;
+	background-image:conic-gradient(transparent,#3dd070,transparent 30%);
+	-webkit-animation:rotate 10s linear infinite;
+	animation:rotate 10s linear infinite;
+}
+.conic-success::after, .conic-danger::after {
+	content:"";
+	position:absolute;
+	z-index:-1;
+	left:6px;
+	top:6px;
+	width:calc(100% - 12px);
+	height:calc(100% - 12px);
+	background:#f5f7fb;
+	border-radius:5px;
+}
+.conic-danger::before {
+	background-image:conic-gradient(transparent,#ff3948,transparent 30%);
+}
+.conic-demo::after {
+	-webkit-animation:opacityChange 5s infinite linear;
+	animation:opacityChange 5s infinite linear
+}
+@-webkit-keyframes opacityChange {
+	50% {
+	opacity:.5
+}
+100% {
+	opacity:1
+}
+}@keyframes opacityChange {
+	50% {
+	opacity:.5
+}
+100% {
+	opacity:1
+}
+}

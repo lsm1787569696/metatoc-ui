@@ -1,6 +1,7 @@
 import users from "./users"
 import contents from "./contents"
 import chains from "./chains"
+import services from "./services"
 
 export default {
     // 设置私有命名空间
@@ -41,10 +42,10 @@ export default {
     },
     mutations: {
         changeShow (state, name) {
-            console.log("Execute [changeShow] methond")
-            console.log("Parameter [name] is '", name, "'")
+            if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
+                console.log("Execute [changeShow] methond")
+                console.log("Parameter [name] is '", name, "'")
 
-            if (users.state.currentUser.address != "") {
                 if (name == "") {
                     for (let key in state) {
                         if (state[key].users.length > 0) {
@@ -75,8 +76,22 @@ export default {
                 }
             }
         },
+        contentToBlock (state, name) {
+            if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
+                if (typeof state[name] != "undefined") {
+                    const currentUser = {
+                        name: users.state.currentUser.name,
+                        byName: users.state.currentUser.byName,
+                        address: users.state.currentUser.address,
+                        privateKey: users.state.currentUser.privateKey,
+                        avatar: users.state.currentUser.avatar
+                    }
+                    state[name].users.push(currentUser)
+                }
+            }
+        },
         shareBlock (state, name) {
-            if (users.state.currentUser.address != "") {
+            if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
                 if (typeof state[name] != "undefined") {
                     if (state[name].users.length == 1) {
                         const userName = state[name].users[0].name
@@ -106,10 +121,16 @@ export default {
                             // blocks.mutations.changeShow(blocks.state, "")
 
                             // 更新链上节点数据是否显示
-                            chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
+                            // chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
                         }
                     }
                 }
+            } else {
+                alert("Sorry, [users.state.currentUser.address] is empty")
+            }
+        },
+        viewTrack (state, name) {
+            if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
             }
         }
     },

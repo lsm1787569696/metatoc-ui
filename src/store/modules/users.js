@@ -58,10 +58,10 @@ export default {
                 state.currentUser.avatar = state[name].avatar
 
                 // 切换用户时更新区块数据是否显示
-                blocks.mutations.changeShow(blocks.state, "")
+                // blocks.mutations.changeShow(blocks.state, "")
 
                 // 切换用户时更新链上节点数据是否显示
-                chains.mutations.changeNodeStatus(chains.state, { nodeKey: "", nodeStatus: "" })
+                // chains.mutations.changeNodeStatus(chains.state, { nodeKey: "", nodeStatus: "" })
             }
         }
     },

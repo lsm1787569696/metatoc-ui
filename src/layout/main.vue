@@ -6,7 +6,10 @@
 </template>
 
 <style scoped>
-
+.main {
+    /* height: 900px; */
+    background: #f5f7fb;
+}
 </style>
 
 <script>
