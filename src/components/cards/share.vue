@@ -11,8 +11,12 @@
                                 <img :id="index" :src="element.src" alt="" v-if="element.src != ''">
                                 <img :id="index" :src="element.src1" alt="" v-if="element.src1 != ''">
                             </div>
-                            <div class="contentContainer">
+                            <div class="contentContainer"
+                                v-if="$store.state.blocks.blockA.name == 'blockA' && element.content == 'Hello' ? $store.state.blocks.blockA.showContent :  $store.state.blocks.blockB.showContent">
                                 {{ element.content }}
+                            </div>
+                            <div class="contentContainer unShare" v-else>
+                                暂无权限
                             </div>
                         </div>
                         <div class="rightContainer">
@@ -20,10 +24,16 @@
                                 :icon="InfoFilled" icon-color="#626AEF" type="success" confirm-button-type="success"
                                 title='是否将这条数据分享给您的好友' @confirm="confirmEvent(element.id)">
                                 <template #reference>
-                                    <el-button>分享</el-button>
+                                    <el-button
+                                        v-if="$store.state.blocks.blockA.name == 'blockA' && element.content == 'Hello' ? $store.state.blocks.blockA.showContent :  $store.state.blocks.blockB.showContent">
+                                        分享</el-button>
                                 </template>
                             </el-popconfirm>
-                            <el-button @click="drawer = true">溯源</el-button>
+
+                            <el-button @click="drawer=true"
+                                v-if="$store.state.blocks.blockA.name == 'blockA' && element.content == 'Hello' ? $store.state.blocks.blockA.showContent :  $store.state.blocks.blockB.showContent">
+                                溯源
+                            </el-button>
                         </div>
                     </div>
                 </template>
@@ -132,24 +142,33 @@ let confirmEvent = (btnIndex) => {
 </script>
 <style scoped>
 .common-cards {
+    position: relative;
     margin-top: 12px;
-    margin-right: 30px;
+    margin-right: 3px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    height: 146px;
+    height: 180px;
+    border-radius: 10px;
+    background: #f5f7fb;
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    position: relative;
 }
 
 .shareContainer {
+    position: absolute;
+    top: -30px;
     display: flex;
     width: 100%;
     height: 100%;
 }
 
 .shareList {
-    height: 100%;
-    width: 100%;
+    position: absolute;
+    top: -30px;
+    /* height: 100%;
+    width: 100%; */
     height: 200px;
     display: flex;
     /* justify-content: center; */
@@ -158,11 +177,13 @@ let confirmEvent = (btnIndex) => {
 }
 
 .listData {
-    border: 1px solid black;
-    width: 220px;
-    height: 110px;
+    border-radius: 5px;
+    width: 240px;
+    height: 150px;
     display: flex;
-    margin: 0 40px;
+    margin: 80px 40px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    background: #fff;
 }
 
 .rightContainer {
@@ -173,12 +194,13 @@ let confirmEvent = (btnIndex) => {
 }
 
 .rightContainer .el-button {
-    margin: 10px;
+    margin: 30px 0 0px 0;
     width: 45px;
     background-color: rgba(45, 95, 255, .4);
 }
 
 .leftContainer {
+    position: relative;
     width: 70%;
     height: 100%;
     display: flex;
@@ -189,13 +211,17 @@ let confirmEvent = (btnIndex) => {
 }
 
 .leftContainer img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .contentContainer {
     position: absolute;
-    top: 100px;
+    top: 110px;
+}
+
+.unShare {
+    color: #3dd070;
 }
 
 /* img[src=""] {

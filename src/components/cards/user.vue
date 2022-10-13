@@ -62,6 +62,10 @@ export default {
                 }
             }
             $store.commit("users/swithCurrentUser", title)
+            // 切换用户时更新区块数据是否显示
+            $store.commit("blocks/changeShow", "")
+            // 切换用户时更新链上节点数据是否显示
+            $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
             emitter.emit('isCheck', title)
         }
 
@@ -83,6 +87,10 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
+    border-radius: 10px;
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    background: #f5f7fb;
+    height: 194px;
 }
 
 img {
@@ -98,16 +106,27 @@ img {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
 }
 
 .backStyle {
-    border-radius: 50px;
-    /* background: linear-gradient(145deg, #f0f0f0, #cacaca); */
-    background: #e0e0e0;
-    /* background: rgb(2, 0, 36); */
-    background: linear-gradient(90deg, rgba(2, 0, 36, .4) 0%, rgba(45, 95, 255, .4) 31%, rgba(8, 41, 142, .4) 63%, rgba(0, 212, 255, .4) 100%);
-    box-shadow: 20px 20px 40px rgba(45, 95, 255, .5),
-        -20px -20px 40px #ffffff;
+    /* border-radius: 22px;
+    background: rgba(144, 147, 153, .3);
+    box-shadow: 1px 1px 34px #3c3e40,
+        1px 1px 34px #e4e8f2; */
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    letter-spacing: .25px;
+    line-height: normal;
+    padding: 11px 24px;
+    transition: background box-shadow 280ms ease;
 }
 
 .imgBox {
