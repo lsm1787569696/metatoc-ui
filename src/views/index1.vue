@@ -1,5 +1,5 @@
 <template>
-    <el-container class="my-height-100-percent">
+    <el-container class="my-height-100-percent background">
         <el-main class="my-height-100-percent">
             <el-row class="my-height-100-percent">
                 <el-col :span="8" :offset="1">
@@ -44,5 +44,11 @@ export default {
 }
 .my-bottom-height {
     height: 70%;
+}
+.background {
+    /* background-image: url("/src/assets/emoji-ffffff-2048x1152@1.25x.png");
+    background-repeat: no-repeat;
+    background-position-x: -400px;
+    background-position-y: -1000px; */
 }
 </style>
