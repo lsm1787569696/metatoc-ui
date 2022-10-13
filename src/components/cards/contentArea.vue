@@ -2,9 +2,6 @@
     <el-card class="common-cards card" style="margin-right:45px">
         <div class="flex ">
             <div class="imgContainer">
-                <div class="headerTitle">
-                    需上链数据
-                </div>
             </div>
             <draggable :list="arr1" :force-fallback="true" animation="300" :group="groupA" :sort="false"
                 @remove="moveSuccess" @start="startDraggable" filter=".undraggable" chosenClass="chosen">
@@ -47,9 +44,24 @@ const moveSuccess = (e) => {
     for (let index in arr1) {
         if (arr1[index].id == e.oldDraggableIndex) {
             arr1[index].drag = !arr1[index].drag
+
+            let blockName = ""
+            if (e.item.__draggable_context.element.name == "contentA") {
+                blockName = "blockA"
+            } else {
+                blockName = "blockB"
+            }
+
             $store.commit("contents/contentToBlock", e.item.__draggable_context.element.name)
+            $store.commit("blocks/contentToBlock", blockName)
+            $store.commit("blocks/changeShow", blockName)
+
+            $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
+            $store.commit("services/refreshServices")
         } else { }
     }
+
+
 
     if ($store.state.users.currentUser.name == 'userA') {
         e.item.__draggable_context.element.src1 = ''
@@ -74,13 +86,16 @@ const moveSuccess = (e) => {
                     
 <style scoped>
 .common-cards {
-    margin-top: 12px;
+    margin-top: 20px;
     margin-right: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    height: 610px;
+    height: 700px;
+    border-radius: 10px;
+    background: #f5f7fb;
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
 }
 
 .flex {
@@ -90,44 +105,14 @@ const moveSuccess = (e) => {
     flex-direction: column
 }
 
-img {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    margin: 0 20px;
-}
-
 .content1 {
-    margin-top: 20px;
-    border: 1px solid black;
-    width: 300px;
+    margin: 20px 20px 0 20px;
+    margin-top: 80px;
+    width: 240px;
     height: 150px;
-}
-
-.chosen {
-    /* background-color: rgba(45, 95, 255, .4) !important; */
-}
-
-.ghost {
-    /* background-color: rgba(45, 95, 255, .4) !important; */
-}
-
-
-/* From www.lingdaima.com */
-.card {
-    --color-1: rgba(178, 12, 211, .3);
-    --color-2: rgba(5, 252, 248, 0.3);
-    --color-3: rgba(45, 95, 255, .4);
-    background: var(--color-3);
-    box-shadow: -10px -10px var(--color-1),
-        15px 10px var(--color-2);
-    transition: box-shadow 0.25s ease-in-out,
-        transform 0.25s ease-in-out;
-}
-
-.card:hover {
-    box-shadow: -10.275px -10.275px var(--color-1),
-        15.4px 10.275px var(--color-2);
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    background: #fff;
 }
 </style>
                     

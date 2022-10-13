@@ -1,18 +1,18 @@
 <template>
     <div class="main-top">
         <el-row>
-            <el-col :span="5" :offset="1">
+            <el-col :span="8" :offset="1">
                 <!-- <t-authorization></t-authorization> -->
                 <!-- <t-transaction></t-transaction> -->
                 <!-- <t-CreateBlock></t-CreateBlock> -->
-                <t-User></t-User>
-                <t-ContentArea></t-ContentArea>
+                <!-- <t-User></t-User> -->
+                <!-- <t-ContentArea></t-ContentArea> -->
+                <tuserContent></tuserContent>
             </el-col>
-
-            <el-col :span="17">
-                <t-Share></t-Share>
-                <t-RunningState></t-RunningState>
-                <t-Dom></t-Dom>
+            <el-col :span="13">
+                <!-- <t-Share></t-Share> -->
+                <!-- <t-RunningState></t-RunningState> -->
+                <!-- <t-Dom></t-Dom> -->
             </el-col>
         </el-row>
     </div>
@@ -39,6 +39,7 @@ import share from '../../components/cards/share.vue'
 import runningState from '../../components/cards/runningState.vue'
 import dom from '../../components/cards/dom.vue'
 import user from '../../components/cards/user.vue'
+import userContent from '../../components/cards/userContent.vue'
 
 const tAuthorization = authorization
 const tTransaction = transaction
@@ -54,4 +55,5 @@ const tShare = share
 const tRunningState = runningState
 const tDom = dom
 const tUser = user
+const tuserContent = userContent
 </script>
