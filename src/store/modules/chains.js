@@ -42,6 +42,8 @@ export default {
     },
     getters: {
         getAllNodes (state) {
+            console.log("Execute [getAllNodes] methond")
+
             const allNodes = []
             allNodes.push(state.nodeA)
             allNodes.push(state.nodeB)
@@ -54,8 +56,6 @@ export default {
         changeNodeStatus (state, {nodeKey, nodeStatus}) {
             if (true || users.state.currentUser.address != "") {
                 console.log("Execute [contentToBlock] methond")
-                console.log("Parameter [nodeKey] is '", nodeKey, "'")
-                console.log("Parameter [nodeStatus] is '", nodeStatus, "'")
 
                 if (nodeStatus == "fake") {
 
@@ -74,13 +74,15 @@ export default {
                     }
 
                     for (let key in blocks.state) {
-                        if (blocks.state[key].users.length > 0) {
-                            for (let index in blocks.state[key].users) {
-                                if (blocks.state[key].users[index].name == users.state.currentUser.name) {
-                                    const content = blocks.state[key].content
-                                    for (let key in state) {
-                                        if (state[key].nodeStatus == "available") {
-                                            state[key].content.push(content)
+                        if (key == "blockA" || key == "blockB") {
+                            if (blocks.state[key].users.length > 0) {
+                                for (let index in blocks.state[key].users) {
+                                    if (blocks.state[key].users[index].name == users.state.currentUser.name) {
+                                        const content = blocks.state[key].content
+                                        for (let key in state) {
+                                            if (state[key].nodeStatus == "available") {
+                                                state[key].content.push(content)
+                                            }
                                         }
                                     }
                                 }
@@ -102,8 +104,6 @@ export default {
                     }
                 }
             }
-
-            // services.mutations.refreshServices(services.state)
         }
     },
     actions: {}

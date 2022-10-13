@@ -1,6 +1,4 @@
 import users from "./users"
-import blocks from "./blocks"
-import chains from "./chains"
 import services from "./services"
 
 export default {
@@ -11,61 +9,77 @@ export default {
             name: "contentA",
             content: "Hello",
             fakeContent: "Welcome",
-            path: "/metatoc/1024show/hello/" + Date.now(),
+            path: "",
             drag: true
         },
         contentB: {
             name: "contentB",
             content: "World",
             fakeContent: "1024show",
-            path: "/metatoc/1024show/world/" + Date.now(),
+            path: "",
             drag: true
         }
     },
     getters: {
-        getContentAInfo (state) {
-            return state.contentA
-        },
-        getContentBInfo (state) {
-            return state.contentB
-        },
         getAllContentsInfo (state) {
+            console.log("Execute [getAllContentsInfo] methond")
+
             const allContets = []
-            allContets.push(state.contentA)
-            allContets.push(state.contentB)
+
+            const handleContents = (name) => {
+                const cookieKey = ("metatoc_1024show_contents_" + name).toUpperCase()
+                const cookieValue = $cookies.get(cookieKey)
+
+                if (cookieValue == null) {
+                    state[name].path = "/metatoc/1024show/" + name + "/" + Date.now()
+                    state[name].drag = true
+                    $cookies.set(cookieKey, {
+                        path: state[name].path,
+                        drag: state[name].drag
+                    })
+                } else {
+                    state[name].path = cookieValue.path
+                    state[name].drag = cookieValue.drag
+                }
+
+                allContets.push(state[name])
+            }
+
+            // handle contentA
+            handleContents("contentA")
+            // handle contentB
+            handleContents("contentB")
+
             return allContets
         }
     },
     mutations: {
+        refreshContents (state, name) {
+            if (typeof name == "undefined") {
+                let cookieKey
+                cookieKey = ("metatoc_1024show_contents_contentA").toUpperCase()
+                $cookies.remove(cookieKey)
+                cookieKey = ("metatoc_1024show_contents_contentB").toUpperCase()
+                $cookies.remove(cookieKey)
+            }
+        },
         contentToBlock (state, name) {
+            console.log("Execute [contents.contentToBlock] methond")
+
             if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
                 if (typeof state[name] != "undefined" && state[name].drag == true) {
-                    console.log("Execute [contentToBlock] methond")
-                    console.log("Parameter [name] is '", name, "'")
-
-                    // TODO: POST https://example.io/v1/paths
-
-                    // 上链
-                    // const currentUser = {
-                    //     name: users.state.currentUser.name,
-                    //     byName: users.state.currentUser.byName,
-                    //     address: users.state.currentUser.address,
-                    //     privateKey: users.state.currentUser.privateKey,
-                    //     avatar: users.state.currentUser.avatar
-                    // }
-                    // blocks.state[state.contentBlockMap[name]].users.push(currentUser)
-                    // blocks.mutations.changeShow(blocks.state, state.contentBlockMap[name])
-
-                    // 链上展示
-                    // chains.mutations.changeNodeStatus(chains.state, {nodeKey: "", nodeStatus: ""})
-
-                    // 禁用拖拽
                     state[name].drag = false
+
+                    const cookieKey = ("metatoc_1024show_contents_" + name).toUpperCase()
+                    const cookieValue = $cookies.get(cookieKey)
+                    if (cookieValue != null) {
+                        $cookies.set(cookieKey, {
+                            path: cookieValue.path,
+                            drag: false
+                        })
+                    }
                 }
-            } else {
-                alert("Sorry, [users.state.currentUser.address] is empty")
             }
         }
-    },
-    actions: {}
+    }
 }
