@@ -18,9 +18,6 @@
         <li>能否拖拽：{{ item.drag }}</li>
         <li><button @click="contentToBlock(item.name)">上链</button></li>
     </ul>
-    <ul>
-        <li><button @click="refreshContents()">重置Contents</button></li>
-    </ul>
     <hr/>
 
     <h2>Blocks</h2>
@@ -72,66 +69,36 @@ export default {
     let currentUser = computed(() => {
         return $store.getters["users/getCurrentUserInfo"]
     })
-
-    const swithCurrentUser = (name) => {
-        $store.commit("users/swithCurrentUser", {"name": name, "reset": false})
-
-        // 切换用户时更新区块数据是否显示
-        // $store.commit("blocks/changeShow")
-
-        // 切换用户时更新链上节点数据是否显示
-        // $store.commit("chains/changeNodeStatus", { nodeKey: "", nodeStatus: "" })
-    }
-
     let allContents = computed(() => {
         return $store.getters["contents/getAllContentsInfo"]
     })
-
-    const contentToBlock = (name) => {
-        $store.commit("contents/contentToBlock", name)
-
-        let blockName = ""
-        if (name == "contentA") {
-            blockName = "blockA"
-        } else {
-            blockName = "blockB"
-        }
-        $store.commit("blocks/contentToBlock", blockName)
-
-        $store.commit("blocks/changeShow")
-
-        // $store.commit("chains/changeNodeStatus", {nodeKey: "", nodeStatus: ""})
-        // $store.commit("services/refreshServices")
-    }
-
-    const refreshContents = () => {
-        $store.commit("contents/refreshContents")
-        allContents = $store.getters["contents/getAllContentsInfo"]
-
-        $store.commit("blocks/refreshBlocks")
-        allBlocks = $store.getters["blocks/getAllBlocksInfo"]
-    }
-
     let allBlocks = computed(() => {
         return $store.getters["blocks/getAllBlocksInfo"]
     })
-
-    const shareBlock = (name) => {
-        $store.commit("blocks/shareBlock", name)
-    }
-
-    const viewTrack = (name) => {
-        $store.commit("blocks/viewTrack", name)
-    }
-
     let allServices = computed(() => {
         return $store.getters["services/getAllServicesInfo"]
     })
-
     let allNodes = computed(() => {
         return $store.getters["chains/getAllNodes"]
     })
 
+    const swithCurrentUser = (name) => {
+        $store.dispatch("users/swithCurrentUser", name)
+    }
+    const contentToBlock = (name) => {
+        if (name == "contentA") {
+            $store.dispatch("blocks/contentToBlock", "blockA")
+        } else {
+            $store.dispatch("blocks/contentToBlock", "blockB")
+        }
+    }
+    const shareBlock = (name) => {
+        $store.dispatch("blocks/shareBlock", name)
+    }
+    const viewTrack = (name) => {
+        $store.commit("blocks/viewTrack", name)
+        allBlocks = $store.getters["blocks/getAllBlocksInfo"]
+    }
     const changeNodeStatus = (nodeKey, nodeStatus) => {
         $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
         $store.commit("services/refreshServices")
@@ -139,15 +106,14 @@ export default {
 
     return {
       currentUser,
-      swithCurrentUser,
       allContents,
-      contentToBlock,
-      refreshContents,
       allBlocks,
-      shareBlock,
-      viewTrack,
       allServices,
       allNodes,
+      swithCurrentUser,
+      contentToBlock,
+      shareBlock,
+      viewTrack,
       changeNodeStatus
     }
   },

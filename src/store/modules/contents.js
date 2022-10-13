@@ -1,6 +1,4 @@
 import users from "./users"
-import blocks from "./blocks"
-import chains from "./chains"
 import services from "./services"
 
 export default {
@@ -11,42 +9,39 @@ export default {
             name: "contentA",
             content: "Hello",
             fakeContent: "Welcome",
-            path: "/metatoc/1024show/contentA/" + Date.now(),
+            path: "",
             drag: true
         },
         contentB: {
             name: "contentB",
             content: "World",
             fakeContent: "1024show",
-            path: "/metatoc/1024show/contentB/" + Date.now(),
+            path: "",
             drag: true
         }
     },
     getters: {
-        // getContentAInfo (state) {
-        //     return state.contentA
-        // },
-        // getContentBInfo (state) {
-        //     return state.contentB
-        // },
         getAllContentsInfo (state) {
+            console.log("Execute [getAllContentsInfo] methond")
+
             const allContets = []
 
             const handleContents = (name) => {
-                let cookieKey, cookieValue
-                cookieKey = ("metatoc_1024show_contents_" + name).toUpperCase()
-                cookieValue = $cookies.get(cookieKey)
-                if (cookieValue != null) {
-                    state[name].path = cookieValue.path
-                    state[name].drag = cookieValue.drag
-                } else {
+                const cookieKey = ("metatoc_1024show_contents_" + name).toUpperCase()
+                const cookieValue = $cookies.get(cookieKey)
+
+                if (cookieValue == null) {
                     state[name].path = "/metatoc/1024show/" + name + "/" + Date.now()
                     state[name].drag = true
                     $cookies.set(cookieKey, {
                         path: state[name].path,
                         drag: state[name].drag
                     })
+                } else {
+                    state[name].path = cookieValue.path
+                    state[name].drag = cookieValue.drag
                 }
+
                 allContets.push(state[name])
             }
 
@@ -70,10 +65,8 @@ export default {
         },
         contentToBlock (state, name) {
             console.log("Execute [contents.contentToBlock] methond")
-            console.log("users.state.currentUser.address:", users.state.currentUser.address)
-            console.log("services.state.serviceStatus:", services.state.serviceStatus)
+
             if (users.state.currentUser.address != "" && services.state.serviceStatus == "available") {
-                console.log("state[name].drag:", state[name].drag)
                 if (typeof state[name] != "undefined" && state[name].drag == true) {
                     state[name].drag = false
 

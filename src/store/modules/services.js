@@ -11,6 +11,8 @@ export default {
     },
     getters: {
         getAllServicesInfo (state) {
+            console.log("Execute [getAllServicesInfo] methond")
+
             let availableNodeNumber = 0
             let notAvailableNodeNumber = 0
             let fakeNodeNumber = 0
