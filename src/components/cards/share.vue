@@ -1,10 +1,32 @@
 <template>
+    <tTest></tTest>
+
     <div class="common-cards my-container-border-radius my-container-box-shadow my-glass">
         <el-row class="shareList">
-            <el-col :span="12" class="flex justify-content-center">
-                <div class="listData my-card-border-radius my-container-box-shadow" style="background: rgb(239,240,242); background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
+            <el-col v-for="item in allBlocks" :key="item" :span="12" class="flex justify-content-center">
+                <Transition>
+                    <div v-if="item.showBlock == true" class="listData my-card-border-radius my-container-box-shadow">
+                        <div class="leftContainer">
+                            <div style="position: relative; padding: 20px; padding-bottom: 0px;">
+                                <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
+                                <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
+                            </div>
+                            <div style="position: relative; padding: 10px;">
+                                <div v-if="item.showContent == true" style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">{{ item.content }}</div>
+                                <div v-else-if="item.showContent == false" style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">[No permission to view data.]</div>
+                            </div>
+                            <div style="position: relative; text-align: center; padding-bottom: 20px;">
+                                <el-button v-if="item.showContent == true" color="#626aef" type="primary" round>分享数据</el-button>
+                                <el-button color="#626aef" plain round>溯源数据</el-button>
+                            </div>
+                        </div>
+                    </div>
+                </Transition>
+            </el-col>
+            <!-- <el-col :span="12" class="flex justify-content-center">
+                <div class="listData my-card-border-radius my-container-box-shadow">
                     <div class="leftContainer">
-                        <div style="position: relative; padding: 20px 20px 0px 20px;">
+                        <div style="position: relative; padding: 20px; padding-bottom: 0px;">
                             <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
                             <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
                         </div>
@@ -20,9 +42,9 @@
             </el-col>
 
             <el-col :span="12" class="flex justify-content-center">
-                <div class="listData my-card-border-radius my-container-box-shadow" style="background: rgb(239,240,242); background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
+                <div class="listData my-card-border-radius my-container-box-shadow">
                     <div class="leftContainer">
-                        <div style="position: relative; padding: 20px 20px 0px 20px;">
+                        <div style="position: relative; padding: 20px; padding-bottom: 0px;">
                             <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
                             <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
                         </div>
@@ -35,117 +57,41 @@
                         </div>
                     </div>
                 </div>
-            </el-col>
+            </el-col> -->
         </el-row>
     </div>
 </template>
 
 <script>
 import test from "../../views/test.vue"
+import { computed } from '@vue/reactivity'
+import { useStore } from 'vuex'
 
 export default {
     setup () {
+        const $store = useStore()
+
+        let allBlocks = computed(() => {
+            return $store.getters["blocks/getAllBlocksInfo"]
+        })
+
         return {
+            allBlocks,
             userAAvatarSrc: "/src/assets/comp_gabi.jpg",
             userAAvatarSize: "",
             userBAvatarSrc: "/src/assets/comp_ildi.jpg",
             userBAvatarSize: ""
-
         }
     },
     components: {
         tTest: test
+    },
+    methods: {
+        haveCurrentUser: function () {
+            return true
+        }
     }
 }
-// import { ElMessageBox, ElMessage } from 'element-plus'
-// import { reactive, ref } from 'vue'
-// import { useStore } from 'vuex'
-// import draggable from 'vuedraggable'
-// let arr2 = reactive([{canEdit:false},{canEdit:true}])
-// const $store = useStore()
-
-// //  B 禁止拖动
-// let onEnd = () => {
-//     if (arr2.length == 2) {
-//         for (let index in arr2) {
-//             arr2[index].canEdit == true
-//         }
-//     }
-// }
-
-// // 无分享权限提示
-// let shareWaring = () => {
-//     setTimeout(() => {
-//         ElMessage({
-//             message: '暂无权限',
-//             type: 'waring'
-//         })
-//     }, 300)
-// }
-
-// //  分享成功提示
-// let shareSuccess = () => {
-//     setTimeout(() => {
-//         ElMessage({
-//             message: '分享成功!',
-//             type: 'success'
-//         })
-//     }, 300)
-// }
-
-// // 已分享提示
-// let shared = () => {
-//     ElMessageBox.alert('数据已经分享成功 !', '提示', {
-//         confirmButtonText: 'OK',
-//     })
-// }
-
-// // 分享
-// let confirmEvent = (btnIndex) => {
-//     for (let index in arr2) {
-//         if (arr2[index].content == 'Hello' && btnIndex == arr2[index].id) {
-//             if (arr2[index].src != '' && arr2[index].src1 != '') {
-//                 shared()
-//             } else {
-//                 if (arr2[index].src == "") {
-//                     if ($store.state.users.currentUser.name == 'userA') {
-//                         shareWaring()
-//                         return
-//                     }
-//                 } else if (arr2[index].src1 == "") {
-//                     if ($store.state.users.currentUser.name == 'userB') {
-//                         shareWaring()
-//                         return
-//                     }
-//                 }
-//                 arr2[index].src = 'src/assets/man.png'
-//                 arr2[index].src1 = 'src/assets/woman.png'
-//                 $store.commit("blocks/shareBlock", arr2[index].id == '0' ? 'blockA' : 'blockB')
-//                 shareSuccess()
-//             }
-//         } else if (arr2[index].content == 'World' && btnIndex == arr2[index].id) {
-//             if (arr2[index].src != '' && arr2[index].src1 != '') {
-//                 shared()
-//             } else {
-//                 if (arr2[index].src == "") {
-//                     if ($store.state.users.currentUser.name == 'userA') {
-//                         shareWaring()
-//                         return
-//                     }
-//                 } else if (arr2[index].src1 == "") {
-//                     if ($store.state.users.currentUser.name == 'userB') {
-//                         shareWaring()
-//                         return
-//                     }
-//                 }
-//                 arr2[index].src = 'src/assets/man.png'
-//                 arr2[index].src1 = 'src/assets/woman.png'
-//                 $store.commit("blocks/shareBlock", arr2[index].id == '0' ? 'blockA' : 'blockB')
-//                 shareSuccess()
-//             }
-//         }
-//     }
-// }
 </script>
 
 <style scoped>
@@ -165,9 +111,8 @@ export default {
     display: flex;
     max-width: 340px;
     max-height: 220px;
-    /* width: 340px; */
-    /* height: 220px; */
-    background: #fff;
+    background: rgb(239,240,242);
+    background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);
 }
 .leftContainer {
     width: 100%;

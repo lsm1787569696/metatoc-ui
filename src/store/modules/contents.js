@@ -7,14 +7,14 @@ export default {
     state: {
         contentA: {
             name: "contentA",
-            content: "Hello",
+            content: "Mankind was born on Earth.",
             fakeContent: "Welcome",
             path: "",
             drag: true
         },
         contentB: {
             name: "contentB",
-            content: "World",
+            content: "It was never meant to die here.",
             fakeContent: "1024show",
             path: "",
             drag: true
