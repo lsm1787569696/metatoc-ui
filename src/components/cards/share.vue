@@ -1,40 +1,42 @@
 <template>
-    <!-- <tTest></tTest> -->
-
     <div class="common-cards my-container-border-radius my-container-box-shadow my-glass">
-        <div class="shareList">
-            <div class="listData my-card-border-radius my-container-box-shadow" style="margin-right: 5%; background: rgb(239,240,242); background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
-                <div class="leftContainer">
-                    <div style="position: relative; top: 20px; left: 20px;">
-                        <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
-                        <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
-                    </div>
-                    <div style="position: relative; top: 45px;">
-                        <div style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">Mankind was born on Earth.</div>
-                    </div>
-                    <div style="position: relative; top: 80px; text-align: center;">
-                        <el-button color="#626aef" type="primary" round>分享数据</el-button>
-                        <el-button color="#626aef" plain round>溯源数据</el-button>
+        <el-row class="shareList">
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="listData my-card-border-radius my-container-box-shadow" style="background: rgb(239,240,242); background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
+                    <div class="leftContainer">
+                        <div style="position: relative; padding: 20px 20px 0px 20px;">
+                            <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
+                            <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
+                        </div>
+                        <div style="position: relative; padding: 10px;">
+                            <div style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">Mankind was born on Earth.</div>
+                        </div>
+                        <div style="position: relative; text-align: center; padding-bottom: 20px;">
+                            <el-button color="#626aef" type="primary" round>分享数据</el-button>
+                            <el-button color="#626aef" plain round>溯源数据</el-button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </el-col>
 
-            <div class="listData my-card-border-radius my-container-box-shadow" style="margin-left: 5%; background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
-                <div class="leftContainer">
-                    <div style="position: relative; top: 20px; left: 20px;">
-                        <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
-                        <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
-                    </div>
-                    <div style="position: relative; top: 45px;">
-                        <div style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">It was never meant to die here.</div>
-                    </div>
-                    <div style="position: relative; top: 80px; text-align: center;">
-                        <!-- <el-button color="#626aef" type="primary" round>分享数据</el-button> -->
-                        <el-button color="#626aef" plain round>溯源数据</el-button>
+            <el-col :span="12" class="flex justify-content-center">
+                <div class="listData my-card-border-radius my-container-box-shadow" style="background: rgb(239,240,242); background: linear-gradient(90deg, rgba(239,240,242,1) 0%, rgba(227,227,227,1) 100%);">
+                    <div class="leftContainer">
+                        <div style="position: relative; padding: 20px 20px 0px 20px;">
+                            <el-avatar style="position: relative; left: 0px;" :size="50" :src="userAAvatarSrc" />
+                            <el-avatar style="position: relative; left: -5px;" :size="50" :src="userBAvatarSrc" />
+                        </div>
+                        <div style="position: relative; padding: 10px;">
+                            <div style="font-weight: 700; font-size: 20px; text-align: center;" class="balance-amount">It was never meant to die here.</div>
+                        </div>
+                        <div style="position: relative; text-align: center; padding-bottom: 20px;">
+                            <el-button color="#626aef" type="primary" round>分享数据</el-button>
+                            <el-button color="#626aef" plain round>溯源数据</el-button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -156,18 +158,25 @@ export default {
     justify-content: center;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     width: 100%
 }
 .listData {
     display: flex;
-    width: 340px;
-    height: 220px;
+    max-width: 340px;
+    max-height: 220px;
+    /* width: 340px; */
+    /* height: 220px; */
     background: #fff;
 }
 .leftContainer {
     width: 100%;
+}
+.flex {
+    display: flex;
+}
+.justify-content-center {
+    justify-content: center;
 }
 </style>
 
@@ -177,9 +186,6 @@ export default {
     padding: 0px !important;
     height: 100%;
 }
-</style>
-
-<style>
 .el-avatar img {
     transform: translateX(150px);
 }

@@ -7,7 +7,7 @@
                 </el-col>
                 <el-col class="my-card-height" :span="14">
                     <tShare></tShare>
-                    <!-- <tDom class="my-bottom-height"></tDom> -->
+                    <!-- <tDom></tDom> -->
                 </el-col>
             </el-row>
         </el-main>
@@ -37,7 +37,7 @@ export default {
 @import "../assets/css/common-style.css";
 
 .my-card-height {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 45px);
 }
 .my-top-height {
     height: 30%;
@@ -46,9 +46,8 @@ export default {
     height: 70%;
 }
 .background {
-    /* background-image: url("/src/assets/emoji-ffffff-2048x1152@1.25x.png");
+    background-image: url("/src/assets/emoji-ffffff-2048x1152@1.25x.png");
     background-repeat: no-repeat;
-    background-position-x: -400px;
-    background-position-y: -1000px; */
+    background-position: center;
 }
 </style>
