@@ -13,23 +13,29 @@ export default {
         },
         userA: {
             name: "userA",
-            byName: "Lily",
-            address: "",
-            privateKey: "",
-            avatar: ""
+            byName: "Gabi",
+            address: "FRuOpzY0OpSgKGWKFX3R",
+            privateKey: "LbF0soI33uFxiTV5cJkE",
+            avatar: "/src/assets/comp_gabi.jpg"
         },
         userB: {
             name: "userB",
-            byName: "Lucy",
-            address: "",
-            privateKey: "",
-            avatar: ""
+            byName: "Ildi",
+            address: "C48zPoaBKvxYmwvJ1H90",
+            privateKey: "bUYLGUw5mZ3w93S01lsD",
+            avatar: "/src/assets/comp_ildi.jpg"
         }
     },
     getters: {
         getCurrentUserInfo (state) {
             console.log("Execute [getCurrentUserInfo] methond")
             return state.currentUser
+        },
+        getAllUsersInfo(state) {
+            const allUsers = []
+            allUsers.push(state.userA)
+            allUsers.push(state.userB)
+            return allUsers
         }
     },
     mutations: {
@@ -57,22 +63,27 @@ export default {
                 const cookieValue = $cookies.get(cookieKey)
 
                 if (cookieValue == null) {
-                    (async function () {
-                        let resData = {}
-                        await ajax({
-                            method: "GET",
-                            url: "../signup"
-                        }).then((res) => {
-                            if (res.status == 200) {
-                                resData = JSON.parse(res.data)
+                    const show = true
+                    if (show == true) {
+                        endSwitchCurrentUser(state[name].address, state[name].privateKey)
+                    } else {
+                        (async function () {
+                            let resData = {}
+                            await ajax({
+                                method: "GET",
+                                url: "../signup"
+                            }).then((res) => {
+                                if (res.status == 200) {
+                                    resData = JSON.parse(res.data)
+                                }
+                            }).catch((err) => {
+                                console.error("Failed to request the signup interface. Please check.")
+                            })
+                            if (resData.code == 0) {
+                                endSwitchCurrentUser(resData.data.address, resData.data.private_key)
                             }
-                        }).catch((err) => {
-                            console.error("Failed to request the signup interface. Please check.")
-                        })
-                        if (resData.code == 0) {
-                            endSwitchCurrentUser(resData.data.address, resData.data.private_key)
-                        }
-                    })()
+                        })()
+                    }
                 } else {
                     endSwitchCurrentUser(cookieValue.address, cookieValue.privateKey)
                 }
@@ -92,7 +103,7 @@ export default {
                         address: address,
                         privateKey: privateKey
                     }
-                    $cookies.set(cookieKey, cookieValue)
+                    // $cookies.set(cookieKey, cookieValue)
                 }
 
                 const { commit } = context

@@ -1,196 +1,442 @@
 <template>
     <div class="chains-container1 my-container-border-radius my-container-box-shadow my-glass" style="margin-top: 15px;">
-        <el-row style="text-align: center; padding-top: 20px;">
+        <el-row style="position: relative; top: 15px; text-align: center;">
             <el-col :span="24">
                 <el-tag v-if="allServices.serviceStatus === 'available'" :type="tagSuccess" effect="dark" round style="width: 150px; height: 30px;">
                     服务持续运行中
                 </el-tag>
                 <el-tag v-else :type="tagDanger" effect="dark" round style="width: 200px; height: 30px;">
-                    超过半数节点损坏，服务故障
+                    节点损坏数超过阈值，服务故障
                 </el-tag>
             </el-col>
         </el-row>
 
-        <el-row style="padding-top: 0px;">
-            <el-col v-for="(item, index) in allNodes" :key="{ item, index }" :span="12" class="flex justify-content-center">
-                <div v-if="showUpperNodes(index) && item.name === 'nodeA' && item.nodeStatus === 'available'" class="circleanimation color-success" v-menus:left="menusNodeA">
+        <el-row style="height: calc(50% - 10px); top: -20px;">
+            <el-col :span="12" class="flex justify-content-center">
+                <div v-if="nodeA.nodeStatus === 'available'" class="circleanimation color-success my-container-box-shadow" v-menus:left="menusNodeA" style="top: 50%; transform: translateY(-50%); position: absolute;">
                     <div class="circle-animation-front">
-                        <div class="title">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 0px 0 15px 0;">
-                            <span style="font-weight: 300; font-size: 14px;">此节点已成功完成 </span>
-                            <span>{{ item.allContent.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据同步</span>
-                            <br />
-                            <span style="font-weight: 300; font-size: 14px;">您可以查看 </span>
-                            <span>{{ item.content.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
-                        </div>
-
-                        <div class="sub-title">
-                            <span>鼠标悬停此区域可查看区块内容</span>
-                            <br />
-                            <span>鼠标点击此区域可进行节点操作</span>
-                        </div>
-                        <div class="sub-title">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagSuccess" effect="dark" round>
-                                健康
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeA.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeA.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeA.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="dark" round>
+                                    健康
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                     <div class="circle-animation-back bg information">
-                        <div class="title" style="color: #fff; padding-top: 43px;">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 25px 0 15px 0; color: #fff;">
-                            <span v-if="item.content.length > 0" style="font-weight: 300; font-size: 16px;"> {{ item.content }} </span>
-                            <span v-else style="font-weight: 300; font-size: 16px;"> ["No data"] </span>
-                            <!-- <br /> -->
-                            <!-- <span style="font-weight: 300; font-size: 12px;"> data blocks submit by {{ currentUser.byName }} </span> -->
-                        </div>
-                        <div class="sub-title" style="color: #fff; margin-top: 40px;">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagSuccess" effect="plain" round>
-                                健康
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeA.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeA.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="plain" round>
+                                    健康
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div v-else-if="showUpperNodes(index) && item.name === 'nodeA' && item.nodeStatus === 'notAvailable'" class="circleanimation color-danger" v-menus:left="menusNodeA">
+                <div v-else class="circleanimation color-danger my-container-box-shadow" v-menus:left="menusNodeA" style="top: 50%; transform: translateY(-50%); position: absolute;">
                     <div class="circle-animation-front">
-                        <div class="title">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 0px 0 15px 0;">
-                            <span style="font-weight: 300; font-size: 14px;">此节点已成功完成 </span>
-                            <span>{{ item.allContent.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据同步</span>
-                            <br />
-                            <span style="font-weight: 300; font-size: 14px;">您可以查看 </span>
-                            <span>{{ item.content.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
-                        </div>
-
-                        <div class="sub-title">
-                            <span>鼠标悬停此区域可查看区块内容</span>
-                            <br />
-                            <span>鼠标点击此区域可进行节点操作</span>
-                        </div>
-                        <div class="sub-title">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagDanger" effect="dark" round>
-                                损坏
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeA.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeA.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeA.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="dark" round>
+                                    损坏
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                     <div class="circle-animation-back bg information">
-                        <div class="title" style="color: #fff; padding-top: 43px;">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 25px 0 15px 0; color: #fff;">
-                            <span v-if="item.content.length > 0" style="font-weight: 300; font-size: 16px;"> {{ item.content }} </span>
-                            <span v-else style="font-weight: 300; font-size: 16px;"> ["No data"] </span>
-                            <!-- <br /> -->
-                            <!-- <span style="font-weight: 300; font-size: 12px;"> data blocks submit by {{ currentUser.byName }} </span> -->
-                        </div>
-                        <div class="sub-title" style="color: #fff; margin-top: 40px;">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagDanger" effect="plain" round>
-                                损坏
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeA.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeA.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="plain" round>
+                                    损坏
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </el-col>
 
-                <div v-if="showUpperNodes(index) && item.name === 'nodeB' && item.nodeStatus === 'available'" class="circleanimation color-success" v-menus:left="menusNodeB">
+            <el-col :span="12" class="flex justify-content-center">
+                <div v-if="nodeB.nodeStatus === 'available'" class="circleanimation color-success my-container-box-shadow" v-menus:left="menusNodeB" style="top: 50%; transform: translateY(-50%); position: absolute;">
                     <div class="circle-animation-front">
-                        <div class="title">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 0px 0 15px 0;">
-                            <span style="font-weight: 300; font-size: 14px;">此节点已成功完成 </span>
-                            <span>{{ item.allContent.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据同步</span>
-                            <br />
-                            <span style="font-weight: 300; font-size: 14px;">您可以查看 </span>
-                            <span>{{ item.content.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
-                        </div>
-
-                        <div class="sub-title">
-                            <span>鼠标悬停此区域可查看区块内容</span>
-                            <br />
-                            <span>鼠标点击此区域可进行节点操作</span>
-                        </div>
-                        <div class="sub-title">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagSuccess" effect="dark" round>
-                                健康
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeB.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeB.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeB.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="dark" round>
+                                    健康
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                     <div class="circle-animation-back bg information">
-                        <div class="title" style="color: #fff; padding-top: 43px;">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 25px 0 15px 0; color: #fff;">
-                            <span v-if="item.content.length > 0" style="font-weight: 300; font-size: 16px;"> {{ item.content }} </span>
-                            <span v-else style="font-weight: 300; font-size: 16px;"> ["No data"] </span>
-                            <!-- <br /> -->
-                            <!-- <span style="font-weight: 300; font-size: 12px;"> data blocks submit by {{ currentUser.byName }} </span> -->
-                        </div>
-                        <div class="sub-title" style="color: #fff; margin-top: 40px;">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagSuccess" effect="plain" round>
-                                健康
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeB.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeB.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="plain" round>
+                                    健康
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div v-else-if="showUpperNodes(index) && item.name === 'nodeB' && item.nodeStatus === 'notAvailable'" class="circleanimation color-danger" v-menus:left="menusNodeB">
+                <div v-else class="circleanimation color-danger my-container-box-shadow" v-menus:left="menusNodeB" style="top: 50%; transform: translateY(-50%); position: absolute;">
                     <div class="circle-animation-front">
-                        <div class="title">
-                            {{ item.byName }}
-                        </div>
-                        <div class="title" style="padding: 0px 0 15px 0;">
-                            <span style="font-weight: 300; font-size: 14px;">此节点已成功完成 </span>
-                            <span>{{ item.allContent.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据同步</span>
-                            <br />
-                            <span style="font-weight: 300; font-size: 14px;">您可以查看 </span>
-                            <span>{{ item.content.length }}</span>
-                            <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
-                        </div>
-
-                        <div class="sub-title">
-                            <span>鼠标悬停此区域可查看区块内容</span>
-                            <br />
-                            <span>鼠标点击此区域可进行节点操作</span>
-                        </div>
-                        <div class="sub-title">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagDanger" effect="dark" round>
-                                损坏
-                            </el-tag>
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeB.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeB.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeB.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="dark" round>
+                                    损坏
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                     <div class="circle-animation-back bg information">
-                        <div class="title" style="color: #fff; padding-top: 43px;">
-                            {{ item.byName }}
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeB.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeB.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="plain" round>
+                                    损坏
+                                </el-tag>
+                            </div>
                         </div>
-                        <div class="title" style="padding: 25px 0 15px 0; color: #fff;">
-                            <span v-if="item.content.length > 0" style="font-weight: 300; font-size: 16px;"> {{ item.content }} </span>
-                            <span v-else style="font-weight: 300; font-size: 16px;"> ["No data"] </span>
-                            <!-- <br /> -->
-                            <!-- <span style="font-weight: 300; font-size: 12px;"> data blocks submit by {{ currentUser.byName }} </span> -->
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+
+        <el-row style="height: calc(50% - 10px); top: -20px;">
+            <el-col :span="12" class="flex justify-content-center">
+                <div v-if="nodeC.nodeStatus === 'available'" class="circleanimation color-success my-container-box-shadow" v-menus:left="menusNodeC" style="top: 50%; transform: translateY(-50%); position: absolute;">
+                    <div class="circle-animation-front">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeC.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeC.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeC.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="dark" round>
+                                    健康
+                                </el-tag>
+                            </div>
                         </div>
-                        <div class="sub-title" style="color: #fff; margin-top: 40px;">
-                            <span>节点状态 </span>
-                            <el-tag :type="tagDanger" effect="plain" round>
-                                损坏
-                            </el-tag>
+                    </div>
+                    <div class="circle-animation-back bg information">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeC.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeC.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="plain" round>
+                                    健康
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="circleanimation color-danger my-container-box-shadow" v-menus:left="menusNodeC" style="top: 50%; transform: translateY(-50%); position: absolute;">
+                    <div class="circle-animation-front">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeC.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeC.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeC.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="dark" round>
+                                    损坏
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="circle-animation-back bg information">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeC.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeC.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="plain" round>
+                                    损坏
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-col>
+
+            <el-col :span="12" class="flex justify-content-center">
+                <div v-if="nodeD.nodeStatus === 'available'" class="circleanimation color-success my-container-box-shadow" v-menus:left="menusNodeD" style="top: 50%; transform: translateY(-50%); position: absolute;">
+                    <div class="circle-animation-front">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeD.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeD.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeD.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="dark" round>
+                                    健康
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="circle-animation-back bg information">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeD.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeD.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagSuccess" effect="plain" round>
+                                    健康
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="circleanimation color-danger my-container-box-shadow" v-menus:left="menusNodeD" style="top: 50%; transform: translateY(-50%); position: absolute;">
+                    <div class="circle-animation-front">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title">
+                                {{ nodeD.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">已同步 </span>
+                                <span>{{ nodeD.allContent.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="title">
+                                <span style="font-weight: 300; font-size: 14px;">可查看 </span>
+                                <span>{{ nodeD.content.length }}</span>
+                                <span style="font-weight: 300; font-size: 14px;"> 区块数据</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <span>鼠标点击可进行节点操作</span>
+                                <div></div>
+                                <span>鼠标悬停可查看区块内容</span>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.02); margin-bottom: calc(70vh*0.02);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="dark" round>
+                                    损坏
+                                </el-tag>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="circle-animation-back bg information">
+                        <div></div>
+                        <div style="position: relative; top: 50%; transform: translateY(-50%); padding-left: 20px; padding-right: 20px;">
+                            <div class="title" style="color: #fff;">
+                                {{ nodeD.byName }}
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="title">
+                                <div v-for="item in nodeD.content" :key="item" style="color: #fff; font-weight: 300; font-size: 14px;"> {{ item }} </div>
+                            </div>
+                            <div style="margin-top: calc(70vh*0.04); margin-bottom: calc(70vh*0.04);" ></div>
+                            <div class="sub-title">
+                                <el-tag :type="tagDanger" effect="plain" round>
+                                    损坏
+                                </el-tag>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,6 +468,25 @@ export default {
             return $store.getters["chains/getAllNodes"]
         })
 
+        const nodeA = computed(() => {
+            const allNodes = $store.getters["chains/getAllNodes"]
+            return allNodes[0]
+        })
+
+        const nodeB = computed(() => {
+            const allNodes = $store.getters["chains/getAllNodes"]
+            return allNodes[1]
+        })
+
+        const nodeC = computed(() => {
+            const allNodes = $store.getters["chains/getAllNodes"]
+            return allNodes[2]
+        })
+
+        const nodeD = computed(() => {
+            const allNodes = $store.getters["chains/getAllNodes"]
+            return allNodes[3]
+        })
 
         const changeNodeStatus = (nodeKey, nodeStatus) => {
             $store.commit("chains/changeNodeStatus", {"nodeKey": nodeKey, "nodeStatus": nodeStatus})
@@ -336,6 +601,10 @@ export default {
             currentUser,
             allBlocks,
             allNodes,
+            nodeA,
+            nodeB,
+            nodeC,
+            nodeD,
             changeNodeStatus,
             allServices,
             showUpperNodes,
@@ -373,36 +642,36 @@ export default {
     height: 68%;
 }
 .color-success .title {
+    display: inline-block;
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #3dd070;
     letter-spacing: 1px;
     text-align: center;
-    padding: 26px 0 15px 0;
 }
 .color-success .sub-title {
+    display: inline-block;
     font-weight: 300;
     font-size: 0.5em;
     color: #3C4857;
     letter-spacing: 1px;
     text-align: center;
-    padding: 10px 0 15px 0;
 }
 .color-danger .title {
+    display: inline-block;
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #ff3948;
     letter-spacing: 1px;
     text-align: center;
-    padding: 26px 0 15px 0;
 }
 .color-danger .sub-title {
+    display: inline-block;
     font-weight: 300;
     font-size: 0.5em;
     color: #3C4857;
     letter-spacing: 1px;
     text-align: center;
-    padding: 10px 0 15px 0;
 }
 .flex {
     display: flex;

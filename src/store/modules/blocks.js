@@ -2,6 +2,7 @@ import users from "./users"
 import contents from "./contents"
 import services from "./services"
 import ajax from "../../api/ajax.js"
+import moment from "moment/moment"
 
 export default {
     // 设置私有命名空间
@@ -45,10 +46,10 @@ export default {
                 if (cookieValue == null) {
                     state[name].showBlock = false
                     state[name].users = []
-                    $cookies.set(cookieKey, {
-                        showBlock: state[name].showBlock,
-                        users: state[name].users
-                    })
+                    // $cookies.set(cookieKey, {
+                    //     showBlock: state[name].showBlock,
+                    //     users: state[name].users
+                    // })
                 } else {
                     state[name].showBlock = cookieValue.showBlock
                     state[name].users = cookieValue.users
@@ -96,33 +97,50 @@ export default {
                             console.log("Execute [blocks.contentToBlock.beginContentToBlock] methond");
 
                             (async function () {
-                                let resData = {}
-                                await ajax({
-                                    method: "POST",
-                                    url: "../paths",
-                                    transformRequest: [function (data, headers) {
-                                        return JSON.stringify({
-                                            "address": users.state.currentUser.address,
-                                            "private_key": users.state.currentUser.privateKey,
-                                            "path": contents.state[state.blocksToContentsMap[name]].path,
-                                            "content": contents.state[state.blocksToContentsMap[name]].content
-                                        })
-                                    }],
-                                    headers: {
-                                        "accept": "application/json",
-                                        "Content-Type": "application/json"
-                                    }
-                                }).then((res) => {
-                                    if (res.status == 200) {
-                                        resData = JSON.parse(res.data)
-                                    }
-                                }).catch((err) => {
-                                    console.error("Failed to request the post paths interface. Please check.")
-                                })
-                                if (resData.code == 0) {
+                                const show = true
+                                if (show == true) {
                                     endContentToBlock()
+                                } else {
+                                    let resData = {}
+                                    await ajax({
+                                        method: "POST",
+                                        url: "../paths",
+                                        transformRequest: [function (data, headers) {
+                                            return JSON.stringify({
+                                                "address": users.state.currentUser.address,
+                                                "private_key": users.state.currentUser.privateKey,
+                                                "path": contents.state[state.blocksToContentsMap[name]].path,
+                                                "content": contents.state[state.blocksToContentsMap[name]].content
+                                            })
+                                        }],
+                                        headers: {
+                                            "accept": "application/json",
+                                            "Content-Type": "application/json"
+                                        }
+                                    }).then((res) => {
+                                        if (res.status == 200) {
+                                            resData = JSON.parse(res.data)
+                                        }
+                                    }).catch((err) => {
+                                        console.error("Failed to request the post paths interface. Please check.")
+                                    })
+                                    if (resData.code == 0) {
+                                        endContentToBlock()
+                                    }
                                 }
                             })()
+                        }
+
+                        const showtime = () => {
+                            var nowdate = new Date();
+                            var year = nowdate.getFullYear(),
+                                month = nowdate.getMonth() + 1,
+                                date = nowdate.getDate(),
+                                h = nowdate.getHours(),
+                                m = nowdate.getMinutes(),
+                                s = nowdate.getSeconds();
+                            return year + "-" + month + "-" + date + " " + h +":" + m + ":" + s;
+
                         }
 
                         const endContentToBlock = () => {
@@ -136,14 +154,15 @@ export default {
                                 byName: users.state.currentUser.byName,
                                 address: users.state.currentUser.address,
                                 privateKey: users.state.currentUser.privateKey,
-                                avatar: users.state.currentUser.avatar
+                                avatar: users.state.currentUser.avatar,
+                                timestamp: moment().format("YYYY-MM-DD HH:mm:ss")
                             })
 
                             const cookieKey = ("metatoc_1024show_blocks_" + name).toUpperCase()
-                            $cookies.set(cookieKey, {
-                                showBlock: state[name].showBlock,
-                                users: state[name].users
-                            })
+                            // $cookies.set(cookieKey, {
+                            //     showBlock: state[name].showBlock,
+                            //     users: state[name].users
+                            // })
 
                             const { commit } = context
                             commit("contents/contentToBlock", state.blocksToContentsMap[name], { root: true })
@@ -195,58 +214,72 @@ export default {
                                 const cookieValue = $cookies.get(cookieKey)
 
                                 if (cookieValue == null) {
-                                    (async function () {
-                                        let resData = {}
-                                        await ajax({
-                                            method: "GET",
-                                            url: "../signup"
-                                        }).then((res) => {
-                                            if (res.status == 200) {
-                                                resData = JSON.parse(res.data)
+                                    const show = true
+                                    if (show == true) {
+                                        if (typeof users.state[otherUserName] != "undefined") {
+                                            const cookieKey = ("metatoc_1024show_users_" + otherUserName).toUpperCase()
+                                            const cookieValue = {
+                                                address: users.state[otherUserName].address,
+                                                privateKey: users.state[otherUserName].private_key
                                             }
-                                        }).catch((err) => {
-                                            console.error("Failed to request the signup interface. Please check.")
-                                        })
-                                        if (resData.code == 0) {
-                                            if (typeof users.state[otherUserName] != "undefined") {
-                                                const cookieKey = ("metatoc_1024show_users_" + otherUserName).toUpperCase()
-                                                const cookieValue = {
-                                                    address: resData.data.address,
-                                                    privateKey: resData.data.private_key
-                                                }
-                                                $cookies.set(cookieKey, cookieValue)
-                                            }
+                                            // $cookies.set(cookieKey, cookieValue)
+                                        }
 
-                                            const transformRequestData = {
-                                                "from_address": users.state.currentUser.address,
-                                                "private_key": users.state.currentUser.privateKey,
-                                                "to_address": resData.data.address,
-                                                "token_name": contents.state[state.blocksToContentsMap[name]].path
-                                            }
-
-                                            resData = {}
+                                        endShareBlock()
+                                    } else {
+                                        (async function () {
+                                            let resData = {}
                                             await ajax({
-                                                method: "PUT",
-                                                url: "../paths",
-                                                transformRequest: [function (data, headers) {
-                                                    return JSON.stringify(transformRequestData)
-                                                }],
-                                                headers: {
-                                                    "accept": "application/json",
-                                                    "Content-Type": "application/json"
-                                                }
+                                                method: "GET",
+                                                url: "../signup"
                                             }).then((res) => {
                                                 if (res.status == 200) {
                                                     resData = JSON.parse(res.data)
                                                 }
                                             }).catch((err) => {
-                                                console.error("Failed to request the post paths interface. Please check.")
+                                                console.error("Failed to request the signup interface. Please check.")
                                             })
                                             if (resData.code == 0) {
-                                                endShareBlock()
+                                                if (typeof users.state[otherUserName] != "undefined") {
+                                                    const cookieKey = ("metatoc_1024show_users_" + otherUserName).toUpperCase()
+                                                    const cookieValue = {
+                                                        address: resData.data.address,
+                                                        privateKey: resData.data.private_key
+                                                    }
+                                                    // $cookies.set(cookieKey, cookieValue)
+                                                }
+
+                                                const transformRequestData = {
+                                                    "from_address": users.state.currentUser.address,
+                                                    "private_key": users.state.currentUser.privateKey,
+                                                    "to_address": resData.data.address,
+                                                    "token_name": contents.state[state.blocksToContentsMap[name]].path
+                                                }
+
+                                                resData = {}
+                                                await ajax({
+                                                    method: "PUT",
+                                                    url: "../paths",
+                                                    transformRequest: [function (data, headers) {
+                                                        return JSON.stringify(transformRequestData)
+                                                    }],
+                                                    headers: {
+                                                        "accept": "application/json",
+                                                        "Content-Type": "application/json"
+                                                    }
+                                                }).then((res) => {
+                                                    if (res.status == 200) {
+                                                        resData = JSON.parse(res.data)
+                                                    }
+                                                }).catch((err) => {
+                                                    console.error("Failed to request the post paths interface. Please check.")
+                                                })
+                                                if (resData.code == 0) {
+                                                    endShareBlock()
+                                                }
                                             }
-                                        }
-                                    })()
+                                        })()
+                                    }
                                 } else {
                                     const transformRequestData = {
                                         "from_address": users.state.currentUser.address,
@@ -255,26 +288,31 @@ export default {
                                         "token_name": contents.state[state.blocksToContentsMap[name]].path
                                     }
 
-                                    let resData = {}
-                                    await ajax({
-                                        method: "PUT",
-                                        url: "../paths",
-                                        transformRequest: [function (data, headers) {
-                                            return JSON.stringify(transformRequestData)
-                                        }],
-                                        headers: {
-                                            "accept": "application/json",
-                                            "Content-Type": "application/json"
-                                        }
-                                    }).then((res) => {
-                                        if (res.status == 200) {
-                                            resData = JSON.parse(res.data)
-                                        }
-                                    }).catch((err) => {
-                                        console.error("Failed to request the post paths interface. Please check.")
-                                    })
-                                    if (resData.code == 0) {
+                                    const show = true
+                                    if (show == true) {
                                         endShareBlock()
+                                    } else {
+                                        let resData = {}
+                                        await ajax({
+                                            method: "PUT",
+                                            url: "../paths",
+                                            transformRequest: [function (data, headers) {
+                                                return JSON.stringify(transformRequestData)
+                                            }],
+                                            headers: {
+                                                "accept": "application/json",
+                                                "Content-Type": "application/json"
+                                            }
+                                        }).then((res) => {
+                                            if (res.status == 200) {
+                                                resData = JSON.parse(res.data)
+                                            }
+                                        }).catch((err) => {
+                                            console.error("Failed to request the post paths interface. Please check.")
+                                        })
+                                        if (resData.code == 0) {
+                                            endShareBlock()
+                                        }
                                     }
                                 }
                             })()
@@ -288,17 +326,18 @@ export default {
                                 byName: users.state[otherUserName].byName,
                                 address: users.state[otherUserName].address,
                                 privateKey: users.state[otherUserName].privateKey,
-                                avatar: users.state[otherUserName].avatar
+                                avatar: users.state[otherUserName].avatar,
+                                timestamp: moment().format("YYYY-MM-DD HH:mm:ss")
                             }
                             state[name].users.push(otherUser)
 
                             const cookieKey = ("metatoc_1024show_blocks_" + name).toUpperCase()
                             const cookieValue = $cookies.get(cookieKey)
                             if (cookieValue != null) {
-                                $cookies.set(cookieKey, {
-                                    showBlock: cookieValue.showBlock,
-                                    users: state[name].users
-                                })
+                                // $cookies.set(cookieKey, {
+                                //     showBlock: cookieValue.showBlock,
+                                //     users: state[name].users
+                                // })
                             }
 
                             const { commit } = context

@@ -45,17 +45,23 @@ export default {
             console.log("Execute [getAllNodes] methond")
 
             const allNodes = []
-            allNodes.push(state.nodeA)
-            allNodes.push(state.nodeB)
-            allNodes.push(state.nodeC)
-            allNodes.push(state.nodeD)
+            for (let key in state) {
+                let cookieKey = ("metatoc_1024show_nodes_" + state[key].name).toUpperCase()
+                let cookieValue = $cookies.get(cookieKey)
+                if (cookieValue != null) {
+                    state[key].content = cookieValue.content
+                    state[key].allContent = cookieValue.allContent
+                    state[key].nodeStatus = cookieValue.nodeStatus
+                }
+                allNodes.push(state[key])
+            }
             return allNodes
         }
     },
     mutations: {
         changeNodeStatus (state, {nodeKey, nodeStatus}) {
             if (true || users.state.currentUser.address != "") {
-                console.log("Execute [contentToBlock] methond")
+                console.log("Execute [changeNodeStatus] methond")
 
                 if (nodeStatus == "fake") {
 
@@ -102,9 +108,16 @@ export default {
                             }
                         }
                     }
+
+                    if (nodeKey != "") {
+                        let cookieKey = ("metatoc_1024show_nodes_" + nodeKey).toUpperCase()
+                        // $cookies.set(cookieKey, state[nodeKey])
+                    }
                 }
             }
         }
     },
-    actions: {}
+    actions: {
+
+    }
 }
