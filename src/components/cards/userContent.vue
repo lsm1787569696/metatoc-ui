@@ -19,8 +19,8 @@
                   <div style="font-weight: 700; font-size: 20px; text-align: center;">{{ item.content }}</div>
               </div>
               <div style="position: relative; text-align: center;">
-                <el-button :class="unToShare" color="#2d5fff" type="primary" round
-                  :disabled="item.name == $store.state.contents.contentA.content?!$store.state.contents.contentA.drag:!$store.state.contents.contentB.drag"
+                <el-button color="#2d5fff" type="primary" round
+                  :disabled="!item.drag"
                   @click="contentToBlock(item.name)">
                   数据上链
                 </el-button>

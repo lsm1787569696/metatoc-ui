@@ -65,8 +65,7 @@ export default {
                 const cookieValue = $cookies.get(cookieKey)
 
                 if (cookieValue == null) {
-                    const show = true
-                    if (show == true) {
+                    if (import.meta.env.VITE_DISABLE_REQUEST_WEBSERVICE === "DISABLED") {
                         endSwitchCurrentUser(state[name].address, state[name].privateKey)
                     } else {
                         (async function () {
@@ -105,7 +104,9 @@ export default {
                         address: address,
                         privateKey: privateKey
                     }
-                    // $cookies.set(cookieKey, cookieValue)
+                    if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                        $cookies.set(cookieKey, cookieValue)
+                    }
                 }
 
                 const { commit } = context

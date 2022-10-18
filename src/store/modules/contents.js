@@ -33,10 +33,12 @@ export default {
                 if (cookieValue == null) {
                     state[name].path = "/metatoc/1024show/" + name + "/" + Date.now()
                     state[name].drag = true
-                    // $cookies.set(cookieKey, {
-                    //     path: state[name].path,
-                    //     drag: state[name].drag
-                    // })
+                    if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                        $cookies.set(cookieKey, {
+                            path: state[name].path,
+                            drag: state[name].drag
+                        })
+                    }
                 } else {
                     state[name].path = cookieValue.path
                     state[name].drag = cookieValue.drag
@@ -73,10 +75,12 @@ export default {
                     const cookieKey = ("metatoc_1024show_contents_" + name).toUpperCase()
                     const cookieValue = $cookies.get(cookieKey)
                     if (cookieValue != null) {
-                        // $cookies.set(cookieKey, {
-                        //     path: cookieValue.path,
-                        //     drag: false
-                        // })
+                        if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                            $cookies.set(cookieKey, {
+                                path: cookieValue.path,
+                                drag: false
+                            })
+                        }
                     }
                 }
             }

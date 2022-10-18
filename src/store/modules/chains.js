@@ -111,7 +111,9 @@ export default {
 
                     if (nodeKey != "") {
                         let cookieKey = ("metatoc_1024show_nodes_" + nodeKey).toUpperCase()
-                        // $cookies.set(cookieKey, state[nodeKey])
+                        if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                            $cookies.set(cookieKey, state[nodeKey])
+                        }
                     }
                 }
             }

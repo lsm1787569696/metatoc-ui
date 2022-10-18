@@ -46,10 +46,12 @@ export default {
                 if (cookieValue == null) {
                     state[name].showBlock = false
                     state[name].users = []
-                    // $cookies.set(cookieKey, {
-                    //     showBlock: state[name].showBlock,
-                    //     users: state[name].users
-                    // })
+                    if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                        $cookies.set(cookieKey, {
+                            showBlock: state[name].showBlock,
+                            users: state[name].users
+                        })
+                    }
                 } else {
                     state[name].showBlock = cookieValue.showBlock
                     state[name].users = cookieValue.users
@@ -97,8 +99,7 @@ export default {
                             console.log("Execute [blocks.contentToBlock.beginContentToBlock] methond");
 
                             (async function () {
-                                const show = true
-                                if (show == true) {
+                                if (import.meta.env.VITE_DISABLE_REQUEST_WEBSERVICE === "DISABLED") {
                                     endContentToBlock()
                                 } else {
                                     let resData = {}
@@ -159,10 +160,12 @@ export default {
                             })
 
                             const cookieKey = ("metatoc_1024show_blocks_" + name).toUpperCase()
-                            // $cookies.set(cookieKey, {
-                            //     showBlock: state[name].showBlock,
-                            //     users: state[name].users
-                            // })
+                            if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                                $cookies.set(cookieKey, {
+                                    showBlock: state[name].showBlock,
+                                    users: state[name].users
+                                })
+                            }
 
                             const { commit } = context
                             commit("contents/contentToBlock", state.blocksToContentsMap[name], { root: true })
@@ -214,15 +217,16 @@ export default {
                                 const cookieValue = $cookies.get(cookieKey)
 
                                 if (cookieValue == null) {
-                                    const show = true
-                                    if (show == true) {
+                                    if (import.meta.env.VITE_DISABLE_REQUEST_WEBSERVICE === "DISABLED") {
                                         if (typeof users.state[otherUserName] != "undefined") {
                                             const cookieKey = ("metatoc_1024show_users_" + otherUserName).toUpperCase()
                                             const cookieValue = {
                                                 address: users.state[otherUserName].address,
                                                 privateKey: users.state[otherUserName].private_key
                                             }
-                                            // $cookies.set(cookieKey, cookieValue)
+                                            if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                                                $cookies.set(cookieKey, cookieValue)
+                                            }
                                         }
 
                                         endShareBlock()
@@ -246,7 +250,9 @@ export default {
                                                         address: resData.data.address,
                                                         privateKey: resData.data.private_key
                                                     }
-                                                    // $cookies.set(cookieKey, cookieValue)
+                                                    if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                                                        $cookies.set(cookieKey, cookieValue)
+                                                    }
                                                 }
 
                                                 const transformRequestData = {
@@ -288,8 +294,7 @@ export default {
                                         "token_name": contents.state[state.blocksToContentsMap[name]].path
                                     }
 
-                                    const show = true
-                                    if (show == true) {
+                                    if (import.meta.env.VITE_DISABLE_REQUEST_WEBSERVICE === "DISABLED") {
                                         endShareBlock()
                                     } else {
                                         let resData = {}
@@ -334,10 +339,12 @@ export default {
                             const cookieKey = ("metatoc_1024show_blocks_" + name).toUpperCase()
                             const cookieValue = $cookies.get(cookieKey)
                             if (cookieValue != null) {
-                                // $cookies.set(cookieKey, {
-                                //     showBlock: cookieValue.showBlock,
-                                //     users: state[name].users
-                                // })
+                                if (import.meta.env.VITE_DISABLE_SETCOOKIE === "") {
+                                    $cookies.set(cookieKey, {
+                                        showBlock: cookieValue.showBlock,
+                                        users: state[name].users
+                                    })
+                                }
                             }
 
                             const { commit } = context

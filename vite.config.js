@@ -1,19 +1,23 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  server: {
-    proxy: {
-      '/signup': {
-          target: 'http://172.22.50.211:5000/',
+export default ({ mode }) => {
+  const env = loadEnv(mode, process.cwd())
+
+  // https://vitejs.dev/config/
+  return defineConfig({
+    plugins: [vue()],
+    server: {
+      proxy: {
+        '/signup': {
+            target: env.VITE_WEBSERVICE_HOST || '/',
+            changeOrigin: true,  // 允许跨域
+        },
+        '/paths': {
+          target: env.VITE_WEBSERVICE_HOST || '/',
           changeOrigin: true,  // 允许跨域
       },
-      '/paths': {
-        target: 'http://172.22.50.211:5000/',
-        changeOrigin: true,  // 允许跨域
-    },
+      }
     }
-  }
-})
+  })
+}
