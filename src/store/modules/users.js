@@ -16,14 +16,16 @@ export default {
             byName: "Gabi",
             address: "FRuOpzY0OpSgKGWKFX3R",
             privateKey: "LbF0soI33uFxiTV5cJkE",
-            avatar: "/src/assets/comp_gabi.jpg"
+            avatar: "/src/assets/images/unCheckMan.png",
+            uncheckAvatar: "/src/assets/images/unCheckMan.png"
         },
         userB: {
             name: "userB",
             byName: "Ildi",
             address: "C48zPoaBKvxYmwvJ1H90",
             privateKey: "bUYLGUw5mZ3w93S01lsD",
-            avatar: "/src/assets/comp_ildi.jpg"
+            avatar: "/src/assets/images/unCheckWoman.jpg",
+            uncheckAvatar: "/src/assets/images/unCheckWoman.jpg"
         }
     },
     getters: {

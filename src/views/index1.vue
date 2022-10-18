@@ -2,12 +2,12 @@
     <Transition>
     <el-container class="my-height-100-percent" :class="background()">
         <el-main class="my-height-100-percent">
-            <el-row class="my-height-100-percent">
+            <el-row class="my-height-100-percent" :gutter="20">
                 <el-col :span="10">
                     <!-- <tTest></tTest> -->
                     <tUserContent></tUserContent>
                 </el-col>
-                <el-col class="my-card-height" :span="13" :offset="1">
+                <el-col class="my-card-height" :span="14">
                     <tShare></tShare>
                     <tDom></tDom>
                 </el-col>

@@ -636,7 +636,6 @@ export default {
 
 <style scoped>
 @import "../../assets/css/circle-style.css";
-/* @import "../../assets/css/border-style.css"; */
 @import "../../assets/css/common-style.css";
 .chains-container1 {
     height: 68%;

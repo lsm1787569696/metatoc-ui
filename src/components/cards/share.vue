@@ -163,6 +163,6 @@ export default {
     height: 100%;
 }
 .el-avatar img {
-    transform: translateX(150px);
+    transform: translateX(0px);
 }
 </style>
