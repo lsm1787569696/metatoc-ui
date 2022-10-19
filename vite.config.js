@@ -10,11 +10,11 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/signup': {
-            target: env.VITE_WEBSERVICE_HOST || '/',
+            target: env.VITE_WEBSERVICE_HOST,
             changeOrigin: true,  // 允许跨域
         },
         '/paths': {
-          target: env.VITE_WEBSERVICE_HOST || '/',
+          target: env.VITE_WEBSERVICE_HOST,
           changeOrigin: true,  // 允许跨域
       },
       }
