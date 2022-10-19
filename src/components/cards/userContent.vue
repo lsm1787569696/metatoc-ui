@@ -30,7 +30,7 @@
 
               <div style="position: absolute; text-align: center;bottom: 8%;left: calc(50% - 44px);">
                 <el-button color="#2d5fff" type="primary" round
-                  :disabled="item.name == $store.state.contents.contentA.content?!$store.state.contents.contentA.drag:!$store.state.contents.contentB.drag"
+                  :disabled="!item.drag"
                   @click="contentToBlock(item.name)">
                   数据上链
                 </el-button>
