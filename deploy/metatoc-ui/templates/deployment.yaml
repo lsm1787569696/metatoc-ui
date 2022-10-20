@@ -47,6 +47,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -59,14 +63,10 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumeMounts:
+      volumes:
         - name: nginx-conf
-          mountPath: /etc/nginx/conf.d/default.conf
-          subPath: default.conf
-    volumes:
-      - name: nginx-conf
-        configMap:
-          name: metatoc-ui
-          items:
-            - key: nginx.conf
-              path: default.conf
+          configMap:
+            name: metatoc-ui
+            items:
+              - key: nginx.conf
+                path: default.conf
