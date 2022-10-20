@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "metatoc-ui.labels" . | nindent 4 }}
 data:
-  nginx.conf: |-
+  default.conf: |-
     server {
         listen       80;
 
