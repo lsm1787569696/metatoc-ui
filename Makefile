@@ -24,10 +24,10 @@ stopPro:
 
 .PHONY: pushDev
 pushDev:
-	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/meta42/metatoc-ui-dev:latest
-	docker push harbor.dev.21vianet.com/meta42/metatoc-ui-dev:latest
+	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:latest
+	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:latest
 
 .PHONY: pushPro
 pushPro:
-	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/meta42/metatoc-ui-pro:latest
-	docker push harbor.dev.21vianet.com/meta42/metatoc-ui-pro:latest
+	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:latest
+	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:latest
