@@ -1,10 +1,16 @@
 .PHONY: buildDev
 buildDev:
-	docker build --tag metatoc-ui-dev:latest --build-arg tag=dev  .
+	docker build metatoc-ui-dev:latest --build-arg tag=dev .
+ifneq ($(dtag),)
+	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
+endif
 
 .PHONY: buildPro
 buildPro:
-	docker build --tag metatoc-ui-pro:latest --build-arg tag=pro .
+	docker build metatoc-ui-pro:latest --build-arg tag=dev .
+ifneq ($(dtag),)
+	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
+endif
 
 .PHONY: runDev
 runDev:
@@ -24,10 +30,26 @@ stopPro:
 
 .PHONY: pushDev
 pushDev:
-	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:latest
-	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:latest
+ifneq ($(dtag),)
+	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
+endif
 
 .PHONY: pushPro
 pushPro:
-	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:latest
-	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:latest
+ifneq ($(dtag),)
+	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
+endif
+
+.PHONY: cleanDev
+cleanDev:
+	docker rmi -f metatoc-ui-dev:latest
+ifneq ($(dtag),)
+	docker rmi -f harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
+endif
+
+.PHONY: cleanPro
+cleanPro:
+	docker rmi -f metatoc-ui-pro:latest
+ifneq ($(dtag),)
+	docker rmi -f harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
+endif
