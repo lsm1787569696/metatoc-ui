@@ -8,7 +8,7 @@ image:
   repository: harbor.dev.21vianet.com/metatoc/metatoc-ui-pro
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.0"
+  tag: "0.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
