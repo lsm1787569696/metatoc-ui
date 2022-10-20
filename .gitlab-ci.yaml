@@ -1,0 +1,28 @@
+stages:
+  - build
+  - push
+  - clean
+
+build:
+  stage: build
+  script:
+    - make buildDev dtag=$CI_COMMIT_REF_NAME
+    - make buildPro dtag=$CI_COMMIT_REF_NAME
+  only:
+    - tags
+
+push:
+  stage: push
+  script:
+    - make pushDev dtag=$CI_COMMIT_REF_NAME
+    - make pushPro dtag=$CI_COMMIT_REF_NAME
+  only:
+    - tags
+
+clean:
+  stage: clean
+  script:
+    - make cleanDev dtag=$CI_COMMIT_REF_NAME
+    - make cleanPro dtag=$CI_COMMIT_REF_NAME
+  only:
+    - tags
