@@ -6,8 +6,8 @@ stages:
 build:
   stage: build
   script:
-    - make buildDev dtag=$CI_COMMIT_REF_NAME
-    - make buildPro dtag=$CI_COMMIT_REF_NAME
+    - sudo make buildDev dtag=$CI_COMMIT_REF_NAME
+    - sudo make buildPro dtag=$CI_COMMIT_REF_NAME
   only:
     - tags
   tags:
@@ -16,8 +16,8 @@ build:
 push:
   stage: push
   script:
-    - make pushDev dtag=$CI_COMMIT_REF_NAME
-    - make pushPro dtag=$CI_COMMIT_REF_NAME
+    - sudo make pushDev dtag=$CI_COMMIT_REF_NAME
+    - sudo make pushPro dtag=$CI_COMMIT_REF_NAME
   only:
     - tags
   tags:
@@ -26,8 +26,8 @@ push:
 clean:
   stage: clean
   script:
-    - make cleanDev dtag=$CI_COMMIT_REF_NAME
-    - make cleanPro dtag=$CI_COMMIT_REF_NAME
+    - sudo make cleanDev dtag=$CI_COMMIT_REF_NAME
+    - sudo make cleanPro dtag=$CI_COMMIT_REF_NAME
   only:
     - tags
   tags:
