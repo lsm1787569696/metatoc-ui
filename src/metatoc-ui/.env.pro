@@ -1,0 +1,8 @@
+# 是否开启存储COOKIE
+VITE_DISABLE_SETCOOKIE =
+
+# 是否开启请求webservice接口
+VITE_DISABLE_REQUEST_WEBSERVICE =
+
+# webserivce host
+VITE_WEBSERVICE_HOST = "http://172.22.50.211:5000/"
