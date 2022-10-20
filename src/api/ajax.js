@@ -1,10 +1,17 @@
 // axios二次封装
 import axios from 'axios';
 
+let baseURL = ''
+if (true || import.meta.env.MODE == 'dev') {
+    baseURL = '/api'
+} else {
+    baseURL = import.meta.env.VITE_WEBSERVICE_HOST
+}
+
 const requests = axios.create({
     // 配置对象
     // 基础路径（服务器路径都有/api，加上之后不用每次都输入）
-    baseURL: '/api',
+    baseURL: baseURL,
     // 请求超时的时间（毫秒）
     timeout: 5000,
 });

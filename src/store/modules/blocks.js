@@ -105,7 +105,7 @@ export default {
                                     let resData = {}
                                     await ajax({
                                         method: "POST",
-                                        url: "../paths",
+                                        url: "/paths",
                                         transformRequest: [function (data, headers) {
                                             return JSON.stringify({
                                                 "address": users.state.currentUser.address,
@@ -235,7 +235,7 @@ export default {
                                             let resData = {}
                                             await ajax({
                                                 method: "GET",
-                                                url: "../signup"
+                                                url: "/signup"
                                             }).then((res) => {
                                                 if (res.status == 200) {
                                                     resData = JSON.parse(res.data)
@@ -265,7 +265,7 @@ export default {
                                                 resData = {}
                                                 await ajax({
                                                     method: "PUT",
-                                                    url: "../paths",
+                                                    url: "/paths",
                                                     transformRequest: [function (data, headers) {
                                                         return JSON.stringify(transformRequestData)
                                                     }],
@@ -300,7 +300,7 @@ export default {
                                         let resData = {}
                                         await ajax({
                                             method: "PUT",
-                                            url: "../paths",
+                                            url: "/paths",
                                             transformRequest: [function (data, headers) {
                                                 return JSON.stringify(transformRequestData)
                                             }],
