@@ -69,4 +69,4 @@ spec:
             name: metatoc-ui
             items:
               - key: nginx.conf
-                path: default.conf
+                path: nginx.conf
