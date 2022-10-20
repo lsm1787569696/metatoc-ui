@@ -8,7 +8,7 @@ image:
   repository: harbor.dev.21vianet.com/metatoc/metatoc-ui-pro
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.1.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -41,12 +41,12 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: metatoc-ui.dev.21vianet.com
+    - host: metatoc1024show.dev.21vianet.com
       paths:
       - path: /
         backend:
@@ -56,6 +56,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  ingressClassName: traefik
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

@@ -16,6 +16,8 @@ data:
       }
 
       location /api {
+        rewrite ^.+api/?(.*)$ /$1 break;
+        include uwsgi_params;
         proxy_pass {{ .Values.nginxConf.apiPassProxy }};
       }
     }
