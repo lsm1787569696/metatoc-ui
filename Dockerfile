@@ -14,7 +14,5 @@ FROM nginx:1.21.6
 COPY --from=build /data/node/metatoc-ui/dist/ /usr/share/nginx/html
 RUN mkdir -p /usr/share/nginx/html/src/assets
 COPY --from=build /data/node/metatoc-ui/src/assets/ /usr/share/nginx/html/src/assets
-COPY nginx.template /etc/nginx/conf.d
 EXPOSE 80
-WORKDIR /etc/nginx/conf.d
-ENTRYPOINT envsubst '$proxy_pass' < nginx.template > default.conf && cat default.conf && nginx -g 'daemon off;'
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
