@@ -1,13 +1,13 @@
 .PHONY: buildDev
 buildDev:
-	docker build metatoc-ui-dev:latest --build-arg tag=dev .
+	docker build --tag metatoc-ui-dev:latest --build-arg tag=dev .
 ifneq ($(dtag),)
 	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
 endif
 
 .PHONY: buildPro
 buildPro:
-	docker build metatoc-ui-pro:latest --build-arg tag=dev .
+	docker build --tag metatoc-ui-pro:latest --build-arg tag=dev .
 ifneq ($(dtag),)
 	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
 endif
