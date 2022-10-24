@@ -1,11 +1,11 @@
 <template>
   <div class="userContent-container">
-    <div class="my-container-border-radius my-container-box-shadow" v-for="item in getAllUsersInfo" :key="item"
+
+    <!-- <div class="my-container-border-radius my-container-box-shadow" v-for="item in getAllUsersInfo" :key="item"
       :class="handleBackgroundCard(item.name)">
       <div class="user-info" @click="changeUser()" :class="handleUserInfoClass(item.name)">
         <el-avatar :src="item.avatar" :size="100" />
       </div>
-
       <div class="opacity-card my-container-border-radius"
         :class="$store.state.users.currentUser.name == item.name ? 'toShare' : 'unToShare'">
         <div class="data-card-title" @click="changeUser()">
@@ -15,27 +15,64 @@
           <div class="listData my-card-border-radius my-container-box-shadow" v-for="item, index in allContents"
             :key="(item, index)" :class="handleListData(index)">
             <div class="leftContainer">
-              <!-- <div style="position: relative;">
+               <div style="position: relative;">
                   <el-image style="width: 30px;" :src="imageSrc" :fit="fit" />
-                </div>  -->
-
+                </div>   
               <div style="position: relative;  padding: 20px; padding-bottom: 0px;">
                 <img style="width:32px ;height:32px ;" src="../../assets/images/logo.png" alt="">
               </div>
-
               <div style="width:80%;position: absolute;top: 40%;left: 10%;">
-                <div class="textContent" style="font-weight: 700; font-size: 20px; text-align: center;">{{ item.content
-                }}</div>
+                <div class="textContent" style="font-weight: 700; font-size: 20px; text-align: center;">
+                  <el-tooltip class="box-item" effect="dark" :content=item.content placement="top-start">
+                    {{item.content}}
+                  </el-tooltip>
+                </div>
               </div>
-
               <div style="position: absolute; text-align: center;bottom: 8%;left: calc(50% - 44px);">
-                <el-button color="#2d5fff" type="primary" round
-                  :disabled="!item.drag"
+                <el-button color="#2d5fff" type="primary" round :disabled="!item.drag"
                   @click="contentToBlock(item.name)">
                   数据上链
                 </el-button>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="my-container-border-radius background-card"
+      :class="$store.state.users.currentUser.name == 'userA' ?'userABackground':'userBBackground'">
+      <div class="imgContainer">
+        <div class="user-info" v-for="item in getAllUsersInfo" :key="item">
+          <!-- :class="$store.state.users.currentUser.name != item.name?'unCheckImgInfo':''" -->
+          <div class="imgBack">
+            <el-avatar @click="changeUser(item.name)" :src="item.avatar" :class="$store.state.users.currentUser.name == 'userA' && item.name == 'userA' ? 'checkImg':'unCheckImg' && 
+            $store.state.users.currentUser.name == 'userB' && item.name == 'userB' ? 'checkImg':'unCheckImg'"
+              style=" margin:15% 0px;" :size="100" />
+          </div>
+        </div>
+      </div>
+      <div class="contentContainer">
+        <!-- <div class="data-card-title">
+          待上链数据
+        </div> -->
+        <div class="contentInfoContainer my-card-border-radius " v-for="item, index in allContents"
+          :key="(item, index)">
+
+          <div class="logoContainer">
+            <img src="../../assets/images/logo.png" alt="">
+          </div>
+
+          <div class="textContainer">
+            {{item.content}}
+          </div>
+
+          <div class="btnContainer">
+            <el-button style="border: 1px ;"
+              :color="$store.state.users.currentUser.name == 'userA' ? '#337ecc':'#e9bcbd'" type="primary" round
+              @click="contentToBlock(item.name)" :disabled="!item.drag">
+              数据上链
+            </el-button>
+            <!-- :class="$store.state.users.currentUser.name == 'userA' ?'userABackground':'userBBackground'" -->
           </div>
         </div>
       </div>
@@ -130,31 +167,40 @@ onMounted(() => {
 }
 
 .background-card {
-  width: 45%;
-  height: 85%;
-  background: rgb(239, 240, 242);
+  position: relative;
+  width: 70%;
+  height: 100%;
+  /* background: rgb(239, 240, 242);
   background: linear-gradient(0deg, rgba(239, 240, 242, 1) 0%, rgba(179, 179, 179, 1) 100%);
-  overflow: hidden;
+  overflow: hidden; */
 }
 
 .background-card.active {
   width: 45%;
   height: 85%;
-  background: rgb(239, 240, 242);
-  background: linear-gradient(0deg, rgba(239, 240, 242, 1) 0%, rgba(45, 95, 255, 1) 100%);
+  /* background: rgb(239, 240, 242); */
+  /* background: linear-gradient(0deg, rgba(239, 240, 242, 1) 0%, rgba(45, 95, 255, 1) 100%); */
   overflow: hidden;
 }
 
+.unCheckImgInfo {
+  background: #b0b0b0;
+  border-top-right-radius: 10%;
+}
+
 .user-info {
-  position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  transition: all 0.5s;
-  top: 10px;
-  transform: translateY(0%) scale(0.5);
-  margin-top: -10px;
+  /* margin: 0px 8%; */
+  /* position: relative; */
+  /* width: 100%; */
+  /* transition: all 0.5s; */
+  /* transform: translateY(0%) scale(0.5);
+  margin-top: -10px; */
 }
 
 .isCheck {
@@ -182,11 +228,14 @@ onMounted(() => {
 }
 
 .data-card-title {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   font-weight: 900;
-  padding-top: 18px;
   font-size: 1.125em;
-  cursor: pointer;
 }
 
 .data-card-content {
@@ -227,26 +276,103 @@ onMounted(() => {
   width: 100%;
   max-height: 220px;
 }
+
+.imgContainer {
+  /* border-bottom: 1px solid #eeeeee; */
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+}
+
+.userName {
+  font-size: 1.125em;
+  font-weight: 900;
+}
+
+.contentContainer {
+  width: 100%;
+  height: 75%;
+  /* background: #337ecc; */
+  position: absolute;
+  bottom: 0px;
+}
+
+.contentInfoContainer {
+  width: 90%;
+  height: 35%;
+  margin: 10% auto;
+  background: white;
+}
+
+.logoContainer {
+  width: 100%;
+  height: 25%;
+  position: relative;
+}
+
+.logoContainer img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 10%;
+  top: 30%;
+}
+
+.textContainer {
+  width: 100%;
+  height: 50%;
+  font-size: 1.125em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+}
+
+.btnContainer {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userABackground {
+  background-color: #337ecc;
+}
+
+.userBBackground {
+  background-color: #e9bcbd;
+}
+
+.el-avatar img {
+  /* transform: translateX(150px); */
+}
 </style>
 <style>
 .el-avatar img {
   cursor: pointer;
 }
 
-.userChange.active img {
-  transform: translateX(0px) !important;
+.checkImg img {
+  transform: translateX(50px) !important;
 }
 
-.userChange img {
-  transform: translateX(0px) !important;
+.unCheckImg img {
+  transform: translateX(-50px) !important;
 }
 
-.textContent {
-  word-break: break-all;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+/* .textContent { */
+/* word-break: break-all; */
+/* text-overflow: ellipsis; */
+/* display: -webkit-box; */
+/* -webkit-box-orient: vertical; */
+/* -webkit-line-clamp: 2; */
+/* overflow: hidden; */
+
+
+/* -webkit-line-clamp: 2;
   overflow: hidden;
-}
+  text-overflow: ellipsis; */
+/* } */
 </style>
