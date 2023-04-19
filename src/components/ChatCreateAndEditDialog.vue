@@ -28,7 +28,7 @@
         type="primary"
         @click="onHandleToChain"
         :loading="loadingPopup"
-        v-if="nodeStatus == 'Stoped'"
+        v-if="nodeStatus == 'Stopped'"
         disabled
         >{{ handleToChainText() }}</a-button
       >
@@ -75,7 +75,7 @@
         type="primary"
         @click="onHandleToChain"
         :loading="loadingPopup"
-        v-if="chatState == 'off-chain' && nodeStatus == 'Stoped'"
+        v-if="chatState == 'off-chain' && nodeStatus == 'Stopped'"
         disabled
         >{{ handleToChainText() }}</a-button
       ><a-button
@@ -91,6 +91,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { message } from "ant-design-vue";
 
 const usePopup = (props, emit) => {
   const showPopup = ref(false);
@@ -115,13 +116,27 @@ const usePopup = (props, emit) => {
     }
   };
   const onHandleDelete = () => {
-    emit("popupDelete", { chatUuid, chatValue });
+    loadingPopup.value = true;
+    setTimeout(() => {
+      loadingPopup.value = false;
+      emit("popupDelete", { chatUuid, chatValue });
+      message.success("Delete chat successfully!");
+    }, 0);
   };
   const onHandleSubmit = () => {
     if (chatValue.value.replace(/\s/g, "") == "") {
       alertVisible.value = true;
     } else {
-      emit("popupSubmit", { chatUuid, chatValue });
+      loadingPopup.value = true;
+      setTimeout(() => {
+        loadingPopup.value = false;
+        emit("popupSubmit", { chatUuid, chatValue });
+        if (chatUuid.value == "") {
+          message.success("New chat successfully!");
+        } else {
+          message.success("Modify chat successfully!");
+        }
+      }, 0);
     }
   };
   const onHandleToChain = () => {
@@ -182,9 +197,9 @@ export default {
 
     const handleToChainText = () => {
       if (loadingPopup.value == true) {
-        return "Data uplink...";
+        return "Uplink chat...";
       } else {
-        return "Data uplink";
+        return "Uplink chat";
       }
     };
 

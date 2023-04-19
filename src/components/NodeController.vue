@@ -22,6 +22,7 @@
 <script>
 import { defineComponent, reactive, ref } from "vue";
 import { Dropdown, Menu, Modal } from "ant-design-vue";
+import { message } from "ant-design-vue";
 
 export default defineComponent({
   name: "NodeDisplay",
@@ -116,6 +117,7 @@ export default defineComponent({
           let newNodes = JSON.parse(localStorage.getItem("nodes"));
           newNodes[index] = node;
           localStorage.setItem("nodes", JSON.stringify(newNodes));
+          message.success("Offline node successfully!");
         }
       } else {
         if (offlineNodeNumber.value <= 3 && nodeStatue.value == "Stopped") {
@@ -137,6 +139,7 @@ export default defineComponent({
           let newNodes = JSON.parse(localStorage.getItem("nodes"));
           newNodes[index] = node;
           localStorage.setItem("nodes", JSON.stringify(newNodes));
+          message.success("Onlinee node successfully!");
         }
       }
     };
@@ -169,6 +172,7 @@ export default defineComponent({
           localStorage.setItem("nodeStatue", nodeStatue.value);
 
           emit("nodeStatusChange", nodeStatue.value);
+          message.success("Online node successfully!");
         },
       });
     };
@@ -194,6 +198,7 @@ export default defineComponent({
           localStorage.setItem("nodeStatue", nodeStatue.value);
 
           emit("nodeStatusChange", nodeStatue.value);
+          message.success("Offline node successfully!");
         },
         onCancel() {
           offlineNodeNumber.value--;

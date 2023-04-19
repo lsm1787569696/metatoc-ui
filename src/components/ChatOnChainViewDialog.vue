@@ -11,7 +11,7 @@
             paddingTop: '6px',
           }"
         >
-          <a-avatar :size="36" :src="avatar" />
+          <a-avatar :size="36" :src="handleUserAvatar(avatar)" />
         </div>
         <div
           :style="{
@@ -76,6 +76,9 @@
 import { ref, watchEffect } from "vue";
 import ChatOnChainViewDialogMarkdownParser from "./ChatOnChainViewDialogMarkdownParser.vue";
 import moment from "moment";
+import EmilyJohnsonAvatar from "@/assets/avatar/pexels-photo-16187929.jpeg";
+import MichaelSmithAvatar from "@/assets/avatar/pexels-photo-16161525.jpeg";
+import SophiaWilliamsAvatar from "@/assets/avatar/pexels-photo-16196205.jpeg";
 
 const usePopup = (props, emit) => {
   const showPopup = ref(false);
@@ -118,6 +121,24 @@ export default {
   },
   components: {
     ChatOnChainViewDialogMarkdownParser,
+  },
+  methods: {
+    handleUserAvatar(avatar) {
+      if (avatar == "@/assets/avatar/pexels-photo-16187929.jpeg") {
+        return EmilyJohnsonAvatar;
+      } else if (avatar == "@/assets/avatar/pexels-photo-16161525.jpeg") {
+        return MichaelSmithAvatar;
+      } else if (avatar == "@/assets/avatar/pexels-photo-16196205.jpeg") {
+        return SophiaWilliamsAvatar;
+      }
+    },
+  },
+  data() {
+    return {
+      EmilyJohnsonAvatar,
+      MichaelSmithAvatar,
+      SophiaWilliamsAvatar,
+    };
   },
   setup(props, { emit }) {
     const { showPopup, title, avatar, updateAt, onHandleClose } = usePopup(

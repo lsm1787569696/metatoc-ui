@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-modal
-      v-model:visible="showPopup"
+      :visible="showPopup"
       title="Switch user"
       @cancel="onHandleClose"
       :destroyOnClose="true"
@@ -15,7 +15,7 @@
               @click="selectUser(user)"
             >
               <div class="user-avatar">
-                <a-avatar :src="user.avatar" />
+                <a-avatar :src="handleUserAvatar(user.avatar)" />
               </div>
               <div class="user-info">
                 <div class="user-name">{{ user.name }}</div>
@@ -29,7 +29,10 @@
       </div>
       <template #footer>
         <a-button @click="onHandleClose">Cancel</a-button>
-        <a-button type="primary" @click="onHandleSubmit(this.selectedUserId)"
+        <a-button
+          type="primary"
+          @click="onHandleSubmit(this.selectedUserId)"
+          :loading="loadingPopup"
           >OK</a-button
         >
       </template>
@@ -38,10 +41,14 @@
 </template>
 <script>
 import { defineComponent, ref, watchEffect } from "vue";
+import { message } from "ant-design-vue";
+import EmilyJohnsonAvatar from "@/assets/avatar/pexels-photo-16187929.jpeg";
+import MichaelSmithAvatar from "@/assets/avatar/pexels-photo-16161525.jpeg";
+import SophiaWilliamsAvatar from "@/assets/avatar/pexels-photo-16196205.jpeg";
 
 const usePopup = (props, emit) => {
-  console.log(props, emit);
   const showPopup = ref(false);
+  const loadingPopup = ref(false);
   const myUsers = ref([]);
   const selectedUserId = ref(0);
   watchEffect(() => {
@@ -60,13 +67,25 @@ const usePopup = (props, emit) => {
     selectedUserId.value = JSON.parse(props.localCurrentUser)["id"];
   });
   const onHandleClose = () => {
-    emit("popupClose");
+    if (loadingPopup.value == false) {
+      emit("popupClose");
+    }
   };
   const onHandleSubmit = (selectedUserId) => {
-    emit("popupSubmit", selectedUserId);
+    loadingPopup.value = true;
+    setTimeout(() => {
+      loadingPopup.value = false;
+      emit("popupSubmit", selectedUserId);
+      // message.success(
+      //   "Switched user successfully! The current user is: " +
+      //     JSON.parse(props.localUserList)[selectedUserId]["name"]
+      // );
+      message.success("Switch user successfully!");
+    }, 0);
   };
   return {
     showPopup,
+    loadingPopup,
     myUsers,
     selectedUserId,
     onHandleClose,
@@ -96,6 +115,9 @@ export default defineComponent({
   },
   data() {
     return {
+      EmilyJohnsonAvatar,
+      MichaelSmithAvatar,
+      SophiaWilliamsAvatar,
       // selectedUserId: null,
       // users: [
       //   {
@@ -120,10 +142,20 @@ export default defineComponent({
     selectUser(user) {
       this.selectedUserId = user.id;
     },
+    handleUserAvatar(avatar) {
+      if (avatar == "@/assets/avatar/pexels-photo-16187929.jpeg") {
+        return EmilyJohnsonAvatar;
+      } else if (avatar == "@/assets/avatar/pexels-photo-16161525.jpeg") {
+        return MichaelSmithAvatar;
+      } else if (avatar == "@/assets/avatar/pexels-photo-16196205.jpeg") {
+        return SophiaWilliamsAvatar;
+      }
+    },
   },
   setup(props, { emit }) {
     const {
       showPopup,
+      loadingPopup,
       onHandleClose,
       onHandleSubmit,
       myUsers,
@@ -132,6 +164,7 @@ export default defineComponent({
 
     return {
       showPopup,
+      loadingPopup,
       onHandleClose,
       onHandleSubmit,
       myUsers,

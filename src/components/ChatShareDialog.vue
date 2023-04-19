@@ -4,8 +4,7 @@
       <span>Share</span>
     </template>
     <template #content>
-      <p>Please select who you want to shared.</p>
-      <p>{{ nodeStatus }}</p>
+      <p>Please select who you want to shared</p>
       <a-select
         v-model:value="value"
         :options="buildOptions(userList, item.users)"
@@ -30,7 +29,7 @@
             marginLeft: '6px',
           }"
           @click="ok(this.item)"
-          v-if="nodeStatus == 'Stoped'"
+          v-if="nodeStatus == 'Stopped'"
           disabled
           >OK</a-button
         >
@@ -53,6 +52,8 @@
 <script>
 import { ref } from "vue";
 import { ShareAltOutlined } from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
+
 export default {
   name: "ChatShareDialog",
   props: {
@@ -110,6 +111,7 @@ export default {
           item.users.push(element);
         });
         emit("shareSubmit", item);
+        message.success("Share chat successfully!");
       }
       visible.value = false;
       value.value = [];
