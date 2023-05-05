@@ -41,6 +41,7 @@
           }"
           @click="ok(this.item)"
           v-else-if="nodeStatus == 'Running'"
+          :loading="loadingPopup"
           >OK</a-button
         >
       </div>
@@ -53,6 +54,7 @@
 import { ref } from "vue";
 import { ShareAltOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
+import { share } from "../utils/block";
 
 export default {
   name: "ChatShareDialog",
@@ -90,7 +92,7 @@ export default {
       return options;
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const dropdownVisibleChange = (open) => {
       console.log("call func [dropdownVisibleChange]");
       console.log("open", open);
@@ -105,20 +107,126 @@ export default {
     });
 
     const visible = ref(false);
-    const ok = (item) => {
+    const loadingPopup = ref(false);
+    const ok = async (item) => {
+      console.log(item);
       if (value.value.length > 0) {
-        value.value.forEach((element) => {
-          item.users.push(element);
-        });
-        emit("shareSubmit", item);
-        message.success("Share chat successfully!");
+        let successNum = 0;
+        loadingPopup.value = true;
+        const private_key = JSON.parse(localStorage.getItem("currentUser"))[
+          "private_key"
+        ];
+        const from_address = JSON.parse(localStorage.getItem("currentUser"))[
+          "address"
+        ];
+        for (const element of value.value) {
+          let to_address = "";
+          JSON.parse(localStorage.getItem("userList")).forEach((user) => {
+            if (user.name == element) {
+              to_address = user.address;
+            }
+          });
+          let token_name = "/" + item.uuid;
+
+          try {
+            const res = await share(
+              private_key,
+              from_address,
+              to_address,
+              token_name
+            );
+            console.log("res==>", res);
+            if (res && res.code == 0 && res.message == "SUCCESSFUL") {
+              item.users.push(element);
+              const onChainChatArray = JSON.parse(
+                localStorage.getItem("onChainChat")
+              );
+              onChainChatArray.forEach((element) => {
+                if (element.uuid == item.uuid) {
+                  element.users = item.users;
+                  element.updateAt = Date.now();
+                }
+              });
+              localStorage.setItem(
+                "onChainChat",
+                JSON.stringify(onChainChatArray)
+              );
+              successNum++;
+            }
+          } catch (err) {
+            console.log("err==>", err);
+          }
+        }
+        if (successNum == value.value.length) {
+          message.success("Chat sharing successful!");
+        } else {
+          message.error("Chat sharing failed, please try again!");
+        }
+        visible.value = false;
+        loadingPopup.value = false;
+        value.value = [];
+      } else {
+        message.error("Please select who you want to shared!");
       }
-      visible.value = false;
-      value.value = [];
     };
+
+    // const ok = (item) => {
+    //   console.log(item);
+    //   if (value.value.length > 0) {
+    //     value.value.forEach((element) => {
+    //       const private_key = JSON.parse(localStorage.getItem("currentUser"))[
+    //         "private_key"
+    //       ];
+    //       const from_address = JSON.parse(localStorage.getItem("currentUser"))[
+    //         "address"
+    //       ];
+    //       let to_address = "";
+    //       JSON.parse(localStorage.getItem("userList")).forEach((user) => {
+    //         if (user.name == element) {
+    //           to_address = user.address;
+    //         }
+    //       });
+    //       let token_name = "/" + item.uuid;
+    //       share(private_key, from_address, to_address, token_name).then(
+    //         (res) => {
+    //           console.log("res==>", res);
+    //           if (res && res.code == 0 && res.message == "SUCCESSFUL") {
+    //             // item.users.push(element);
+    //             // const onChainChatArray = JSON.parse(
+    //             //   localStorage.getItem("onChainChat")
+    //             // );
+    //             // onChainChatArray.forEach((element) => {
+    //             //   if (element.uuid == item.uuid) {
+    //             //     element.users = item.users;
+    //             //     element.updateAt = Date.now();
+    //             //   }
+    //             // });
+    //             // localStorage.setItem(
+    //             //   "onChainChat",
+    //             //   JSON.stringify(onChainChatArray)
+    //             // );
+    //             // console.log("onChainChatArray==>", onChainChatArray);
+    //             message.success("Chat sharing successful!");
+    //             visible.value = false;
+    //             value.value = [];
+    //           } else {
+    //             message.error("Chat sharing failed, please try again!");
+    //           }
+    //         },
+    //         (err) => {
+    //           console.log("err==>", err);
+    //           message.success("Chat sharing failed, please try again!");
+    //         }
+    //       );
+    //     });
+    //   } else {
+    //     message.error("Please select who you want to shared!");
+    //   }
+    // };
+
     const cancel = () => {
       visible.value = false;
-      // value.value = [];
+      value.value = [];
     };
 
     const size = ref("small");
@@ -132,6 +240,7 @@ export default {
       value,
       options,
       visible,
+      loadingPopup,
       ok,
       cancel,
       size,

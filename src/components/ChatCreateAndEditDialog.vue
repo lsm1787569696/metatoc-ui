@@ -197,9 +197,9 @@ export default {
 
     const handleToChainText = () => {
       if (loadingPopup.value == true) {
-        return "Uplink chat...";
+        return "Add Chat to Blockchain...";
       } else {
-        return "Uplink chat";
+        return "Add Chat to Blockchain";
       }
     };
 

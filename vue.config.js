@@ -11,6 +11,21 @@ module.exports = defineConfig({
           "^/api": "",
         },
       },
+      "/api/block": {
+        target: "http://172.22.50.202:2929",
+        // target: "http://172.22.50.211:5000",
+        changOrigin: true,
+        pathRewrite: {
+          "^/api/block": "",
+        },
+      },
+      // "/api/block/paths": {
+      //   target: "http://172.22.50.202:2929",
+      //   changOrigin: true,
+      //   pathRewrite: {
+      //     "^/api/block": "",
+      //   },
+      // },
     },
   },
   chainWebpack: (config) => {

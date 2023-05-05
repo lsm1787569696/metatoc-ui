@@ -47,4 +47,12 @@ function $get(url, params, headers) {
 function $post(url, data, headers) {
   return service.post(url, data, { headers });
 }
-export { $get, $post };
+
+/**
+ * PUT请求
+ */
+function $put(url, data, headers) {
+  return service.put(url, data, { headers });
+}
+
+export { $get, $post, $put };

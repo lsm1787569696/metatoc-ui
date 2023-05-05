@@ -34,12 +34,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const nodes = ref([]);
     const offlineNodeNumber = ref(0);
-    const nodeStatue = ref("Running");
+    const nodeState = ref("Running");
     if (localStorage.getItem("nodes")) {
       nodes.value = JSON.parse(localStorage.getItem("nodes"));
       offlineNodeNumber.value = localStorage.getItem("offlineNodeNumber");
-      nodeStatue.value = localStorage.getItem("nodeStatue");
-      emit("nodeStatusChange", nodeStatue.value);
+      nodeState.value = localStorage.getItem("nodeState");
+      emit("nodeStatusChange", nodeState.value);
     } else {
       nodes.value = reactive(
         Array.from({ length: 5 }, () => ({
@@ -50,8 +50,8 @@ export default defineComponent({
       );
       localStorage.setItem("nodes", JSON.stringify(nodes.value));
       localStorage.setItem("offlineNodeNumber", offlineNodeNumber.value);
-      localStorage.setItem("nodeStatue", nodeStatue.value);
-      emit("nodeStatusChange", nodeStatue.value);
+      localStorage.setItem("nodeState", nodeState.value);
+      emit("nodeStatusChange", nodeState.value);
     }
 
     const handleMousedown = (event, index) => {
@@ -98,7 +98,7 @@ export default defineComponent({
       console.log("node==>", node);
       console.log("node==>", status);
       if (status == "offline") {
-        if (offlineNodeNumber.value >= 2 && nodeStatue.value == "Running") {
+        if (offlineNodeNumber.value >= 2 && nodeState.value == "Running") {
           offlineNodeNumber.value++;
           localStorage.setItem("offlineNodeNumber", offlineNodeNumber.value);
           showConfirmForOffline(
@@ -106,7 +106,7 @@ export default defineComponent({
             node,
             status,
             offlineNodeNumber,
-            nodeStatue
+            nodeState
           );
         } else {
           offlineNodeNumber.value++;
@@ -120,7 +120,7 @@ export default defineComponent({
           message.success("Offline node successfully!");
         }
       } else {
-        if (offlineNodeNumber.value <= 3 && nodeStatue.value == "Stopped") {
+        if (offlineNodeNumber.value <= 3 && nodeState.value == "Stopped") {
           offlineNodeNumber.value--;
           localStorage.setItem("offlineNodeNumber", offlineNodeNumber.value);
           showConfirmForOnline(
@@ -128,7 +128,7 @@ export default defineComponent({
             node,
             status,
             offlineNodeNumber,
-            nodeStatue
+            nodeState
           );
         } else {
           offlineNodeNumber.value--;
@@ -156,22 +156,22 @@ export default defineComponent({
       node,
       status,
       offlineNodeNumber,
-      nodeStatue
+      nodeState
     ) => {
       Modal.info({
         title: "Node is about to go online.",
         content: `After this node goes online, the number of offline nodes will be below the threshold for the normal operation of the blockchain, and functions such as data on-chain and on-chain data sharing will become available again.`,
         onOk() {
           node.status = status;
-          nodeStatue.value = "Running";
+          nodeState.value = "Running";
           setTimeout(() => handleSetTimeout(index, node, status), 300);
 
           let newNodes = JSON.parse(localStorage.getItem("nodes"));
           newNodes[index] = node;
           localStorage.setItem("nodes", JSON.stringify(newNodes));
-          localStorage.setItem("nodeStatue", nodeStatue.value);
+          localStorage.setItem("nodeState", nodeState.value);
 
-          emit("nodeStatusChange", nodeStatue.value);
+          emit("nodeStatusChange", nodeState.value);
           message.success("Online node successfully!");
         },
       });
@@ -182,22 +182,22 @@ export default defineComponent({
       node,
       status,
       offlineNodeNumber,
-      nodeStatue
+      nodeState
     ) => {
       Modal.confirm({
         title: "Do you want to take this node offline?",
         content: `After this node goes offline, the number of offline nodes will exceed the threshold for the normal operation of the blockchain, which will result in functions such as data on-chain and on-chain data sharing becoming unavailable.`,
         onOk() {
           node.status = status;
-          nodeStatue.value = "Stopped";
+          nodeState.value = "Stopped";
           setTimeout(() => handleSetTimeout(index, node, status), 300);
 
           let newNodes = JSON.parse(localStorage.getItem("nodes"));
           newNodes[index] = node;
           localStorage.setItem("nodes", JSON.stringify(newNodes));
-          localStorage.setItem("nodeStatue", nodeStatue.value);
+          localStorage.setItem("nodeState", nodeState.value);
 
-          emit("nodeStatusChange", nodeStatue.value);
+          emit("nodeStatusChange", nodeState.value);
           message.success("Offline node successfully!");
         },
         onCancel() {
