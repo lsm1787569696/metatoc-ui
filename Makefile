@@ -8,11 +8,11 @@ buildPro:
 
 .PHONY: runDev
 runDev:
-	docker run --name metatoc-ui-dev --rm -d -p 80:80 -e proxy_pass=http://172.22.50.211:5000 metatoc-ui-dev:latest
+	docker run --name metatoc-ui-dev --rm -d -p 80:80 -e proxy_pass=http://127.0.0.1:3001 metatoc-ui-dev:latest
 
 .PHONY: runPro
 runPro:
-	docker run --name metatoc-ui-pro --rm -d -p 80:80 -e proxy_pass=http://172.22.50.211:5000 metatoc-ui-pro:latest
+	docker run --name metatoc-ui-pro --rm -d -p 80:80 -e proxy_pass=http://127.0.0.1:3001 metatoc-ui-pro:latest
 
 .PHONY: stopDev
 stopDev:
