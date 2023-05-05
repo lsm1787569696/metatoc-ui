@@ -4,7 +4,7 @@ build:
 
 .PHONY: run
 run:
-	docker run --name metatoc-ui --rm -d -p 80:80 metatoc-ui:latest
+	docker run --name metatoc-ui --rm -d -p 80:80 -e chatgpt_service_proxy_pass=http://metatoc-ui-chatgpt-proxy:3001 -e blockchain_service_proxy_pass=http://172.22.50.202:2929 metatoc-ui:latest
 
 .PHONY: stop
 stop:
