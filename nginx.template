@@ -16,6 +16,6 @@ server {
     location /api/block{
         rewrite ^.+api/?(.*)$ /$1 break;
         include uwsgi_params;
-        proxy_pass $blockchanin_service_proxy_pass;
+        proxy_pass $blockchain_service_proxy_pass;
     }
 }
