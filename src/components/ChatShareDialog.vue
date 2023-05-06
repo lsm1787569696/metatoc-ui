@@ -158,7 +158,7 @@ export default {
           }
         }
         if (successNum == value.value.length) {
-          message.success("Share Chat successful!");
+          message.success("Share chat successful!");
         } else {
           message.error("Share chat failed, please try again!");
         }
