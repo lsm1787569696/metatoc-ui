@@ -158,9 +158,9 @@ export default {
           }
         }
         if (successNum == value.value.length) {
-          message.success("Chat sharing successful!");
+          message.success("Share Chat successful!");
         } else {
-          message.error("Chat sharing failed, please try again!");
+          message.error("Share chat failed, please try again!");
         }
         visible.value = false;
         loadingPopup.value = false;
@@ -169,60 +169,6 @@ export default {
         message.error("Please select who you want to shared!");
       }
     };
-
-    // const ok = (item) => {
-    //   console.log(item);
-    //   if (value.value.length > 0) {
-    //     value.value.forEach((element) => {
-    //       const private_key = JSON.parse(localStorage.getItem("currentUser"))[
-    //         "private_key"
-    //       ];
-    //       const from_address = JSON.parse(localStorage.getItem("currentUser"))[
-    //         "address"
-    //       ];
-    //       let to_address = "";
-    //       JSON.parse(localStorage.getItem("userList")).forEach((user) => {
-    //         if (user.name == element) {
-    //           to_address = user.address;
-    //         }
-    //       });
-    //       let token_name = "/" + item.uuid;
-    //       share(private_key, from_address, to_address, token_name).then(
-    //         (res) => {
-    //           console.log("res==>", res);
-    //           if (res && res.code == 0 && res.message == "SUCCESSFUL") {
-    //             // item.users.push(element);
-    //             // const onChainChatArray = JSON.parse(
-    //             //   localStorage.getItem("onChainChat")
-    //             // );
-    //             // onChainChatArray.forEach((element) => {
-    //             //   if (element.uuid == item.uuid) {
-    //             //     element.users = item.users;
-    //             //     element.updateAt = Date.now();
-    //             //   }
-    //             // });
-    //             // localStorage.setItem(
-    //             //   "onChainChat",
-    //             //   JSON.stringify(onChainChatArray)
-    //             // );
-    //             // console.log("onChainChatArray==>", onChainChatArray);
-    //             message.success("Chat sharing successful!");
-    //             visible.value = false;
-    //             value.value = [];
-    //           } else {
-    //             message.error("Chat sharing failed, please try again!");
-    //           }
-    //         },
-    //         (err) => {
-    //           console.log("err==>", err);
-    //           message.success("Chat sharing failed, please try again!");
-    //         }
-    //       );
-    //     });
-    //   } else {
-    //     message.error("Please select who you want to shared!");
-    //   }
-    // };
 
     const cancel = () => {
       visible.value = false;
