@@ -1,55 +1,16 @@
-.PHONY: buildDev
-buildDev:
-	docker build --tag metatoc-ui-dev:latest --build-arg tag=dev .
-ifneq ($(dtag),)
-	docker tag metatoc-ui-dev:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
-endif
+.PHONY: build
+build:
+	docker build --tag metatoc-ui:latest .
 
-.PHONY: buildPro
-buildPro:
-	docker build --tag metatoc-ui-pro:latest --build-arg tag=dev .
-ifneq ($(dtag),)
-	docker tag metatoc-ui-pro:latest harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
-endif
+.PHONY: run
+run:
+	docker run --name metatoc-ui --rm -d -p 80:80 -e chatgpt_service_proxy_pass=http://metatoc-ui-chatgpt-proxy:3001 -e blockchain_service_proxy_pass=http://172.22.50.202:2929 metatoc-ui:latest
 
-.PHONY: runDev
-runDev:
-	docker run --name metatoc-ui-dev --rm -d -p 80:80 -e proxy_pass=http://172.22.50.211:5000 metatoc-ui-dev:latest
-
-.PHONY: runPro
-runPro:
-	docker run --name metatoc-ui-pro --rm -d -p 80:80 -e proxy_pass=http://172.22.50.211:5000 metatoc-ui-pro:latest
-
-.PHONY: stopDev
-stopDev:
-	docker stop metatoc-ui-dev
-
-.PHONY: stopPro
-stopPro:
-	docker stop metatoc-ui-pro
+.PHONY: stop
+stop:
+	docker stop metatoc-ui
 
 .PHONY: pushDev
-pushDev:
-ifneq ($(dtag),)
-	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
-endif
-
-.PHONY: pushPro
-pushPro:
-ifneq ($(dtag),)
-	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
-endif
-
-.PHONY: cleanDev
-cleanDev:
-	docker rmi -f metatoc-ui-dev:latest
-ifneq ($(dtag),)
-	docker rmi -f harbor.dev.21vianet.com/metatoc/metatoc-ui-dev:$(dtag)
-endif
-
-.PHONY: cleanPro
-cleanPro:
-	docker rmi -f metatoc-ui-pro:latest
-ifneq ($(dtag),)
-	docker rmi -f harbor.dev.21vianet.com/metatoc/metatoc-ui-pro:$(dtag)
-endif
+push:
+	docker tag metatoc-ui:latest harbor.dev.21vianet.com/metatoc/metatoc-ui:latest
+	docker push harbor.dev.21vianet.com/metatoc/metatoc-ui:latest
